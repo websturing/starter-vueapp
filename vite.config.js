@@ -3,12 +3,17 @@ import { defineConfig } from 'vite'
 
 export default defineConfig({
    plugins: [vue()],
-  server: {
-    host: '0.0.0.0',  // Penting untuk Docker
-    port: 5173,
-    strictPort: true,  // Hindari port fallback
-    hmr: {
-      clientPort: 5173  // Untuk hot-reload
-    }
+    server: {
+      host: '0.0.0.0',
+      port: 5173,
+      strictPort: true,
+      hmr: {
+        clientPort: 5173
+      },
+      watch: {
+        usePolling: true,
+        interval: 100 // default 100ms, bisa disesuaikan
+      }
   }
+
 })
