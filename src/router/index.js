@@ -1,8 +1,26 @@
+import AdminLayout from '@/layouts/AdminLayout.vue'
+import AuthLayout from '@/layouts/AuthLayout.vue'
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
+
+import DashboardView from '@/views/admin/DashboardView.vue'
+import LoginView from '@/views/auth/LoginView.vue'
 
 const routes = [
-  { path: '/home', name: 'Home', component: HomeView },
+  {
+    path: '/login',
+    component: AuthLayout,
+    children: [
+      { path: '', name: 'Login', component: LoginView }
+    ]
+  },
+  {
+    path: '/',
+    component: AdminLayout,
+    children: [
+      { path: 'dashboard', name: 'Dashboard', component: DashboardView }
+      // add more admin pages here
+    ]
+  }
 ]
 
 const router = createRouter({
