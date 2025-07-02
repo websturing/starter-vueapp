@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  vue-app:
+    build:
+      context: .
+      dockerfile: Dockerfile.prod
+    container_name: vue-app
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.vue.rule=Host(`vueapp.localhost`)"
+      - "traefik.http.routers.vue.entrypoints=web"
+      - "traefik.http.services.vue.loadbalancer.server.port=80"
+    networks:
+      - shared
+
+networks:
+  shared:
+    external: true

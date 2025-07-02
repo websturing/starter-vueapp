@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  vue-dev:
+    build: .
+    container_name: vue-dev  # Explicit name lebih baik
+    command: npm run dev -- --host
+    volumes:
+      - .:/app
+      - /app/node_modules
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.vue-dev.rule=Host(`vueapp-dev.localhost`)"
+      - "traefik.http.routers.vue-dev.entrypoints=web"
+      - "traefik.http.services.vue-dev.loadbalancer.server.port=5173"  # ✨ Critical fix
+    networks:
+      - vueapp_network
+    ports:
+      - "5173:5173"  # Untuk development access langsung
+
+networks:
+  vueapp_network:
+    external: true

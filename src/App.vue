@@ -1,6 +1,6 @@
 <template>
     <div id="app">
-        <h1>Vue 3 App</h1>
+        <h1>Vue 3 App data</h1>
     </div>
 </template>
 
