@@ -14,18 +14,25 @@ export const useAuthStore = defineStore('auth', {
 
     async login(form) {
       await this.getCsrfToken()
-      await api.post('/login', form)
+      await api.post('/auth/login', form)
       await this.fetchUser()
     },
 
     async fetchUser() {
-      const res = await api.get('/user')
-      this.user = res.data
-      this.permissions = res.data.permissions || [] // assume user.toArray() returns this
+      try {
+        const res = await api.get('/auth/profile')
+        this.user = res.data
+        this.permissions = res.data.permissions || []
+      } catch (error) {
+        console.log('error catch')
+        this.user = null
+        this.permissions = []
+        throw error // ⬅️ penting untuk trigger catch di route guard
+      }
     },
 
     async logout() {
-      await api.post('/logout')
+      await api.post('/auth/logout')
       this.user = null
       this.permissions = []
     },

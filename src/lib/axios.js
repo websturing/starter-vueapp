@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-axios.defaults.withCredentials = true
+
 const api = axios.create({
   baseURL: 'http://starter.localhost/api',
   withCredentials: true,

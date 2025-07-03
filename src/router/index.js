@@ -15,19 +15,19 @@ const routes = [
         path: '', 
         name: 'Login', 
         component: LoginView,
-        meta: { permission: 'view.dashboard' },
       }
     ]
   },
   {
     path: '/',
     component: AdminLayout,
+    meta: { permission: 'view.dashboard' }, 
     children: [
       { 
         path: 'dashboard', 
         name: 'Dashboard', 
         component: DashboardView,
-        meta: { permission: 'manage.usersss' }, 
+        meta: { permission: 'view.dashboard' }, 
       }
       // add more admin pages here
     ]
@@ -39,24 +39,25 @@ const router = createRouter({
   routes,
 })
 
-// Global route guard
 router.beforeEach(async (to, from, next) => {
   const auth = useAuthStore()
+  // Jangan cek auth kalau route gak perlu permission
+  const needsPermission = !!to.meta.permission
 
-  if (auth.user === null) {
+  if (!auth.user && needsPermission) {
     try {
       await auth.fetchUser()
-    } catch {
-      if (to.meta.permission) return next('/login')
+    } catch (err) {
+      console.warn('Unauthorized:', err?.response?.status)
+      return next('/login')
     }
   }
 
-  if (to.meta.permission && !auth.hasPermission(to.meta.permission)) {
-    return next('/unauthorized') // Or redirect to 403
+  if (needsPermission && !auth.hasPermission(to.meta.permission)) {
+    return next('/login') // Bisa arahkan ke /403 jika mau
   }
 
-  next()
+  return next()
 })
-
 
 export default router
