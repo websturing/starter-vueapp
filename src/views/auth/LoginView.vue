@@ -73,11 +73,11 @@
                                 <div class="card-body">
                                     <form role="form">
                                         <div class="mb-3">
-                                            <input type="email" class="form-control form-control-lg" placeholder="Email"
-                                                aria-label="Email">
+                                            <input type="email" class="form-control form-control-lg" v-model="email"
+                                                placeholder="Email" aria-label="Email">
                                         </div>
                                         <div class="mb-3">
-                                            <input type="email" class="form-control form-control-lg"
+                                            <input type="email" class="form-control form-control-lg" v-model="password"
                                                 placeholder="Password" aria-label="Password">
                                         </div>
                                         <div class="form-check form-switch">
@@ -85,7 +85,7 @@
                                             <label class="form-check-label" for="rememberMe">Remember me</label>
                                         </div>
                                         <div class="text-center">
-                                            <button type="button"
+                                            <button type="button" @click="authStore.login()"
                                                 class="btn btn-lg btn-primary btn-lg w-100 mt-4 mb-0">Sign in</button>
                                         </div>
                                     </form>
@@ -119,19 +119,31 @@
 </template>
 
 <script setup>
+import { useApplicationStore } from '@/stores/application';
+import { useAuthStore } from '@/stores/auth';
+import { useHead } from '@vueuse/head';
+import { storeToRefs } from 'pinia';
 import { onMounted } from 'vue';
 import { onBeforeRouteLeave } from 'vue-router';
 
-import { useHead } from '@vueuse/head';
-useHead({
-    title: 'Login Page',
-    meta: [
-        { name: 'description', content: 'Deskripsi halaman saya' }
-    ]
-})
+const appStore = useApplicationStore();
+const authStore = useAuthStore();
 
-// Misalnya ini halaman Login
+
+const { meta } = storeToRefs(appStore);
+const { email, password } = storeToRefs(authStore);
+
+useHead(() => ({
+    title: meta.value.app_title || 'Argon Dashboard',
+    meta: [
+        {
+            name: meta.value.app_description,
+        }
+    ]
+}))
+
 onMounted(() => {
+    appStore.fetchAppMeta()
     document.body.classList.remove('bg-gray-100')
 })
 
