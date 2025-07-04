@@ -119,8 +119,16 @@
 </template>
 
 <script setup>
-import { onMounted } from 'vue'
-import { onBeforeRouteLeave } from 'vue-router'
+import { onMounted } from 'vue';
+import { onBeforeRouteLeave } from 'vue-router';
+
+import { useHead } from '@vueuse/head';
+useHead({
+    title: 'Login Page',
+    meta: [
+        { name: 'description', content: 'Deskripsi halaman saya' }
+    ]
+})
 
 // Misalnya ini halaman Login
 onMounted(() => {
