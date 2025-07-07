@@ -7,7 +7,7 @@
                     class="navbar navbar-expand-lg blur border-radius-lg top-0 z-index-3 shadow position-absolute mt-4 py-2 start-0 end-0 mx-4">
                     <div class="container-fluid">
                         <a class="navbar-brand font-weight-bolder ms-lg-0 ms-3 " href="../pages/dashboard.html">
-                            Argon Dashboard 3
+                            {{ meta.app_title }}
                         </a>
                         <button class="navbar-toggler shadow-none ms-2" type="button" data-bs-toggle="collapse"
                             data-bs-target="#navigation" aria-controls="navigation" aria-expanded="false"
@@ -24,13 +24,7 @@
                                     <a class="nav-link d-flex align-items-center me-2 active" aria-current="page"
                                         href="../pages/dashboard.html">
                                         <i class="fa fa-chart-pie opacity-6 text-dark me-1"></i>
-                                        Dashboard
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link me-2" href="../pages/profile.html">
-                                        <i class="fa fa-user opacity-6 text-dark me-1"></i>
-                                        Profile
+                                        Documentation
                                     </a>
                                 </li>
                                 <li class="nav-item">
@@ -39,17 +33,11 @@
                                         Sign Up
                                     </a>
                                 </li>
-                                <li class="nav-item">
-                                    <a class="nav-link me-2" href="../pages/sign-in.html">
-                                        <i class="fas fa-key opacity-6 text-dark me-1"></i>
-                                        Sign In
-                                    </a>
-                                </li>
                             </ul>
                             <ul class="navbar-nav d-lg-block d-none">
                                 <li class="nav-item">
                                     <a href="https://www.creative-tim.com/product/argon-dashboard"
-                                        class="btn btn-sm mb-0 me-1 btn-primary">Free Download</a>
+                                        class="btn btn-sm mb-0 me-1 btn-primary">FAQ</a>
                                 </li>
                             </ul>
                         </div>
@@ -85,7 +73,7 @@
                                             <label class="form-check-label" for="rememberMe">Remember me</label>
                                         </div>
                                         <div class="text-center">
-                                            <button type="button" @click="authStore.login()"
+                                            <button type="button" @click="login()"
                                                 class="btn btn-lg btn-primary btn-lg w-100 mt-4 mb-0">Sign in
                                             </button>
                                         </div>
@@ -123,13 +111,13 @@
 import { useApplicationStore } from '@/stores/application';
 import { useAuthStore } from '@/stores/auth';
 import { useHead } from '@vueuse/head';
+import { push } from 'notivue';
 import { storeToRefs } from 'pinia';
 import { onMounted } from 'vue';
 import { onBeforeRouteLeave } from 'vue-router';
 
 const appStore = useApplicationStore();
 const authStore = useAuthStore();
-
 
 const { meta } = storeToRefs(appStore);
 const { email, password } = storeToRefs(authStore);
@@ -143,6 +131,35 @@ useHead(() => ({
     ]
 }))
 
+/** Login Function */
+
+const login = async () => {
+    const notification = push.promise({
+        message: "We're sending your credentials, hold on...",
+        duration: 0,
+        meta: {
+            customClass: 'margin-notiveTop'
+        }
+    })
+    try {
+        const response = await authStore.login()
+        notification.resolve({
+            message: `Great to have you back, ${response.data.data.user.email}! 🎉`,
+            duration: 4000
+        })
+    } catch (error) {
+        console.error(error)
+        notification.reject({
+            message: error?.response?.data?.message || 'Login gagal. Coba lagi.',
+            duration: 4000
+        })
+    }
+
+
+
+};
+
+
 onMounted(() => {
     appStore.fetchAppMeta()
     document.body.classList.remove('bg-gray-100')
@@ -152,3 +169,8 @@ onBeforeRouteLeave(() => {
     document.body.classList.add('bg-gray-100')
 })
 </script>
+<style>
+.margin-notiveTop {
+    margin-top: 80px !important;
+}
+</style>

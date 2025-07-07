@@ -1,5 +1,6 @@
 import api from '@/lib/axios'
 import { defineStore } from 'pinia'
+
 function getCookie(name) {
   const value = `; ${document.cookie}`
   const parts = value.split(`; ${name}=`)
@@ -7,7 +8,6 @@ function getCookie(name) {
   return null
 }
 const token = getCookie('XSRF-TOKEN')
-
 
 export const useAuthStore = defineStore('auth', {
   state: () => ({
@@ -24,12 +24,10 @@ export const useAuthStore = defineStore('auth', {
     },
 
     async login(form) {
-      await this.getCsrfToken()
-
-      await new Promise((r) => setTimeout(r, 100))
-      console.log('login')
-      console.log('cookie setelah getCsrfToken:', document.cookie)
-      await api.post('/api/auth/login', {
+     return this.getCsrfToken()
+    .then(() => new Promise((r) => setTimeout(r, 100)))
+    .then(() =>
+      api.post('/api/auth/login', {
         email: this.email,
         password: this.password
       }, {
@@ -37,7 +35,11 @@ export const useAuthStore = defineStore('auth', {
           'X-XSRF-TOKEN': decodeURIComponent(token),
         }
       })
+    )
+    .then(async (res) => {
       await this.fetchUser()
+      return res
+    })
     },
 
     async fetchUser() {
