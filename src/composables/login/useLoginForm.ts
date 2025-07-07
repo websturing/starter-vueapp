@@ -20,11 +20,18 @@ export function useLoginForm() {
       const response = await auth.login(values)
       notification.resolve({
       message: `Successfully.`,  
+       duration: 3000,
     })
-     }catch (error) {
-    console.error(error)
-    notification.reject("Invalid credentials, please try again.")
-  }
+     }catch (error: any) {
+  console.error(error)
+
+  // Bisa tambahkan jika kamu pakai Axios
+  const message = error?.response?.data?.message || 'Invalid credentials, please try again.'
+
+  notification.reject({
+    message,
+  })
+}
 
   })
 
