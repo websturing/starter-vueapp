@@ -1,6 +1,7 @@
 // src/composables/useLoginForm.ts
 import { loginSchema } from '@/schemas/login/loginSchema'
 import { useAuthStore } from '@/stores/auth'
+import { push } from 'notivue'
 import { useField, useForm } from 'vee-validate'
 
 export function useLoginForm() {
@@ -14,7 +15,17 @@ export function useLoginForm() {
   const { value: password } = useField<string>('password')
 
   const onSubmit = handleSubmit(async (values) => {
-    await auth.login()
+    const notification = push.promise("We're sending your Credential, hold on...")
+     try {
+      const response = await auth.login(values)
+      notification.resolve({
+      message: `Successfully.`,  
+    })
+     }catch (error) {
+    console.error(error)
+    notification.reject("Invalid credentials, please try again.")
+  }
+
   })
 
   return {
