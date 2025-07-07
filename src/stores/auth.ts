@@ -1,21 +1,23 @@
-import api from '@/lib/axios'
+import api from '@/lib/api'
+import type { User } from '@/types/models/user'
 import { defineStore } from 'pinia'
 
-function getCookie(name) {
+function getCookie(name: string): string | null {
   const value = `; ${document.cookie}`
   const parts = value.split(`; ${name}=`)
-  if (parts.length === 2) return parts.pop().split(';').shift()
+  if (parts.length === 2) return parts.pop()?.split(';').shift() ?? null
   return null
 }
+
 const token = getCookie('XSRF-TOKEN')
 
 export const useAuthStore = defineStore('auth', {
   state: () => ({
-    user: null,
-    role: [],
-    permissions: [],
-    email: null,
-    password: null
+    user: null as User | null,
+    role: [] as string[],
+    permissions: [] as string[],
+    email: null as string | null,
+    password: null as string | null,
   }),
 
   actions: {
@@ -23,7 +25,7 @@ export const useAuthStore = defineStore('auth', {
       await api.get('/sanctum/csrf-cookie')
     },
 
-    async login(form) {
+    async login() {
      return this.getCsrfToken()
     .then(() => new Promise((r) => setTimeout(r, 100)))
     .then(() =>
@@ -32,7 +34,7 @@ export const useAuthStore = defineStore('auth', {
         password: this.password
       }, {
         headers: {
-          'X-XSRF-TOKEN': decodeURIComponent(token),
+          'X-XSRF-TOKEN': decodeURIComponent(token || ''),
         }
       })
     )
@@ -61,8 +63,9 @@ export const useAuthStore = defineStore('auth', {
       // this.user = null
       // this.permissions = []
     },
-    hasPermission(permission) {
-      return this.permissions.includes(permission)
+    hasPermission(perm: string | string[]): boolean {
+      if (Array.isArray(perm)) return perm.every(p => this.permissions.includes(p))
+      return this.permissions.includes(perm)
     },
   },
 })

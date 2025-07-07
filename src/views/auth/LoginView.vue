@@ -59,27 +59,9 @@
                                     <p class="mb-0">Enter your email and password to sign in</p>
                                 </div>
                                 <div class="card-body">
-                                    <form role="form">
-                                        <div class="mb-3">
-                                            <input type="email" class="form-control form-control-lg" v-model="email"
-                                                placeholder="Email" aria-label="Email">
-                                        </div>
-                                        <div class="mb-3">
-                                            <input type="email" class="form-control form-control-lg" v-model="password"
-                                                placeholder="Password" aria-label="Password">
-                                        </div>
-                                        <div class="form-check form-switch">
-                                            <input class="form-check-input" type="checkbox" id="rememberMe">
-                                            <label class="form-check-label" for="rememberMe">Remember me</label>
-                                        </div>
-                                        <div class="text-center">
-                                            <button type="button" @click="login()"
-                                                class="btn btn-lg btn-primary btn-lg w-100 mt-4 mb-0">Sign in
-                                            </button>
-                                        </div>
-                                    </form>
+                                    <LoginForm />
                                 </div>
-                                <div class="card-footer text-center pt-0 px-lg-2 px-1">
+                                <div class=" card-footer text-center pt-0 px-lg-2 px-1">
                                     <p class="mb-4 text-sm mx-auto">
                                         Don't have an account?
                                         <a href="javascript:;" class="text-primary text-gradient font-weight-bold">Sign
@@ -94,9 +76,11 @@
                                 style="background-image: url('https://raw.githubusercontent.com/creativetimofficial/public-assets/master/argon-dashboard-pro/assets/img/signin-ill.jpg');
           background-size: cover;">
                                 <span class="mask bg-gradient-primary opacity-6"></span>
-                                <h4 class="mt-5 text-white font-weight-bolder position-relative">"Attention is the new
+                                <h4 class="mt-5 text-white font-weight-bolder position-relative">"Attention is the
+                                    new
                                     currency"</h4>
-                                <p class="text-white position-relative">The more effortless the writing looks, the more
+                                <p class="text-white position-relative">The more effortless the writing looks, the
+                                    more
                                     effort the writer actually put into the process.</p>
                             </div>
                         </div>
@@ -107,11 +91,11 @@
     </main>
 </template>
 
-<script setup>
+<script setup lang="ts">
+import LoginForm from '@/components/forms/login/LoginForm.vue';
 import { useApplicationStore } from '@/stores/application';
 import { useAuthStore } from '@/stores/auth';
 import { useHead } from '@vueuse/head';
-import { push } from 'notivue';
 import { storeToRefs } from 'pinia';
 import { onMounted } from 'vue';
 import { onBeforeRouteLeave } from 'vue-router';
@@ -123,41 +107,13 @@ const { meta } = storeToRefs(appStore);
 const { email, password } = storeToRefs(authStore);
 
 useHead(() => ({
-    title: meta.value.app_title || 'Argon Dashboard',
+    title: meta.value?.app_title || 'Argon Dashboard',
     meta: [
         {
-            name: meta.value.app_description,
+            name: meta.value?.app_description,
         }
     ]
 }))
-
-/** Login Function */
-
-const login = async () => {
-    const notification = push.promise({
-        message: "We're sending your credentials, hold on...",
-        duration: 0,
-        meta: {
-            customClass: 'margin-notiveTop'
-        }
-    })
-    try {
-        const response = await authStore.login()
-        notification.resolve({
-            message: `Great to have you back, ${response.data.data.user.email}! 🎉`,
-            duration: 4000
-        })
-    } catch (error) {
-        console.error(error)
-        notification.reject({
-            message: error?.response?.data?.message || 'Login gagal. Coba lagi.',
-            duration: 4000
-        })
-    }
-
-
-
-};
 
 
 onMounted(() => {

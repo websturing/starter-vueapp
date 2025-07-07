@@ -15,10 +15,10 @@ api.interceptors.request.use((config) => {
   return config
 })
 
-function getCookie(name) {
+function getCookie(name: string): string | undefined {
   const value = `; ${document.cookie}`
   const parts = value.split(`; ${name}=`)
-  if (parts.length === 2) return parts.pop().split(';').shift()
+  if (parts.length === 2) return parts.pop()?.split(';').shift()
 }
 
 export default api

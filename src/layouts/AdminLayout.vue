@@ -120,11 +120,10 @@
 <script setup>
 
 import { useAuthStore } from '@/stores/auth';
-import { push } from 'notivue';
 const authStore = useAuthStore();
 
 
 const logoutView = async () => {
-    push.success('Hi! I am your first notification!')
+    authStore.logout();
 }
 </script>

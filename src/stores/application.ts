@@ -1,9 +1,9 @@
-import api from '@/lib/axios'
+import api from '@/lib/api'
 import { defineStore } from 'pinia'
 
 export const useApplicationStore = defineStore('application', {
   state: () => ({
-    meta: {},
+    meta: {} as Record<string, string>,
   }),
 
   actions: {
