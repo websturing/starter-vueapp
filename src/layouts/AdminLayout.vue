@@ -108,14 +108,23 @@
                 </div>
                 <a href="https://www.creative-tim.com/learning-lab/bootstrap/license/argon-dashboard" target="_blank"
                     class="btn btn-dark btn-sm w-100 mb-3">Documentation</a>
-                <a class="btn btn-primary btn-sm mb-0 w-100"
-                    href="https://www.creative-tim.com/product/argon-dashboard-pro?ref=sidebarfree"
-                    type="button">Upgrade to pro</a>
+                <button class="btn btn-danger btn-sm mb-0 w-100" type="button" @click="logoutView()">Logout</button>
             </div>
         </aside>
         <main>
-
             <router-view />
         </main>
     </div>
 </template>
+
+<script setup>
+
+import { useAuthStore } from '@/stores/auth';
+import { push } from 'notivue';
+const authStore = useAuthStore();
+
+
+const logoutView = async () => {
+    push.success('Hi! I am your first notification!')
+}
+</script>

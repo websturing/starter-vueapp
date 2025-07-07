@@ -2,21 +2,20 @@ FROM node:18-alpine
 
 WORKDIR /app
 
-# 1. Copy package files first for layer caching
+# Install Vite globally
+RUN npm install -g vite
+
+# Copy only package files for caching
 COPY package*.json ./
 
-# 2. Install ALL dependencies (including Pinia)
-RUN npm install -g vite && \
-    npm install && \
-    npm install pinia @vitejs/plugin-vue vue vue-router
+# Install dependencies
+RUN npm install
 
-# 3. Copy source code (with .dockerignore to exclude node_modules)
+# Copy source code
 COPY . .
 
-# 4. Build step (if needed)
-# RUN npm run build
-
+# Expose dev server port
 EXPOSE 5173
 
-# 5. Use direct Vite execution for better HMR
+# Run Vite dev server
 CMD ["vite", "--host", "0.0.0.0"]

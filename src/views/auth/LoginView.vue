@@ -86,7 +86,8 @@
                                         </div>
                                         <div class="text-center">
                                             <button type="button" @click="authStore.login()"
-                                                class="btn btn-lg btn-primary btn-lg w-100 mt-4 mb-0">Sign in</button>
+                                                class="btn btn-lg btn-primary btn-lg w-100 mt-4 mb-0">Sign in
+                                            </button>
                                         </div>
                                     </form>
                                 </div>

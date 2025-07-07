@@ -4,16 +4,22 @@ services:
   vue-dev:
     build: .
     container_name: vue-dev  # Explicit name lebih baik
-    command: npm run dev -- --host
+    # command: npm run dev -- --host
     volumes:
-      - .:/app
+      - ./src:/app/src
+      - ./vite.config.ts:/app/vite.config.ts
+      - ./index.html:/app/index.html
       - /app/node_modules
+      - ./public:/app/public
+      - ./package.json:/app/package.json
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.vue-dev.rule=Host(`vueapp-dev.localhost`)"
+      - "traefik.http.routers.vue-dev.rule=Host(`vue.starter.localhost`)"
       - "traefik.http.routers.vue-dev.entrypoints=websecure"
       - "traefik.http.routers.vue-dev.tls=true"
-      - "traefik.http.services.vue-dev.loadbalancer.server.port=5173"  # ✨ Critical fix
+      - "traefik.http.routers.vue-dev.service=vue-dev"
+      - "traefik.http.routers.vue-dev.middlewares=websocket-headers@file"
+      - "traefik.http.services.vue-dev.loadbalancer.server.port=5173"  
     networks:
       - vueapp_network
     ports:
