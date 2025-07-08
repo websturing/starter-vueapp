@@ -3,11 +3,16 @@ import { loginSchema } from '@/schemas/login/loginSchema'
 import { useAuthStore } from '@/stores/auth'
 import { push } from 'notivue'
 import { useField, useForm } from 'vee-validate'
+import { useRouter } from 'vue-router'
+
 
 export function useLoginForm() {
   const auth = useAuthStore()
-
-  const { handleSubmit, errors, isSubmitting } = useForm({
+  const router = useRouter()
+  const { handleSubmit, errors, isSubmitting } = useForm<{
+    email: string
+    password: string
+  }>({
     validationSchema: loginSchema,
   })
 
@@ -16,22 +21,29 @@ export function useLoginForm() {
 
   const onSubmit = handleSubmit(async (values) => {
     const notification = push.promise("We're sending your Credential, hold on...")
-     try {
+    try {
       const response = await auth.login(values)
       notification.resolve({
-      message: `Successfully.`,  
-       duration: 3000,
-    })
-     }catch (error: any) {
-  console.error(error)
+        message: `Great to have you back, ${response.data.data.user.email}! 🎉.`,
+        duration: 2000,
+      })
 
-  // Bisa tambahkan jika kamu pakai Axios
-  const message = error?.response?.data?.message || 'Invalid credentials, please try again.'
+      await new Promise(resolve => setTimeout(resolve, 1200))
 
-  notification.reject({
-    message,
-  })
-}
+      await Promise.all([
+      router.push('/dashboard'),
+    ])
+    
+    } catch (error: any) {
+      console.error(error)
+
+      // Bisa tambahkan jika kamu pakai Axios
+      const message = error?.response?.data?.message || 'Invalid credentials, please try again.'
+
+      notification.reject({
+        message,
+      })
+    }
 
   })
 
