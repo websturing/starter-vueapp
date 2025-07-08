@@ -35,11 +35,22 @@ const routes = [
     children: [
       { 
         path: 'dashboard', 
-        name: 'Dashboard', 
+        name: 'dashboard', 
         component: () =>  import('@/views/admin/DashboardView.vue'),
         meta: { permission: 'view.dashboard' }, 
-      }
-      // add more admin pages here
+      },
+      { 
+        path: 'permissions', 
+        name: 'permissions', 
+        component: () =>  import('@/views/admin/PermissionsView.vue'),
+        meta: { permission: 'view.dashboard' }, 
+      },
+      { 
+        path: 'users', 
+        name: 'users', 
+        component: () =>  import('@/views/admin/UsersView.vue'),
+        meta: { permission: 'view.dashboard' }, 
+      },
     ]
   },
   {
