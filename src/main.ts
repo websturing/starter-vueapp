@@ -11,9 +11,18 @@ import '@assets/css/argon-dashboard.css?v=2.1.0';
 import '@assets/js/argon-dashboard.min.js?v=2.1.0';
 import Aura from '@primevue/themes/aura';
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate';
+import Button from 'primevue/button';
+import Column from 'primevue/column';
 import PrimeVue from 'primevue/config';
 import ConfirmationService from 'primevue/confirmationservice';
+import DataTable from 'primevue/datatable';
+import InputGroup from 'primevue/inputgroup';
+import InputGroupAddon from 'primevue/inputgroupaddon';
+import InputText from 'primevue/inputtext';
 
+import Paginator from 'primevue/paginator';
+
+import '@assets/css/kai-main.css';
 import 'notivue/animations.css';
 import 'notivue/notification.css';
 import 'primeicons/primeicons.css';
@@ -35,6 +44,13 @@ app.use(PrimeVue, {
         }
     }
 });
+app.component('DataTable', DataTable)
+app.component('Column', Column)
+app.component('Paginator', Paginator)
+app.component('InputText', InputText)
+app.component('InputGroup', InputGroup)
+app.component('InputGroupAddon', InputGroupAddon)
+app.component('Button', Button)
 app.use(ConfirmationService)
 app.use(router)
 app.use(notivue)

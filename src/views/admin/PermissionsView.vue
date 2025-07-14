@@ -40,4 +40,5 @@ import MenuView from '@module/menu/views/MenuView.vue';
 import RolesView from '@module/roles/views/RolesView.vue';
 
 
+
 </script>

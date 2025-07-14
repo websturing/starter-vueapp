@@ -1,6 +1,9 @@
 <template>
     <div>
-        <h1>Menu Views</h1>
-        <p>This is the Users view.</p>
+        <DataTablePermission />
     </div>
 </template>
+
+<script setup lang="ts">
+import DataTablePermission from '@/components/datatables/DataTablePermission.vue';
+</script>
