@@ -1,9 +1,9 @@
 <template>
     <div>
-        <DataTablePermission />
+        <DataTablePermission button-create="Create Permission" />
     </div>
 </template>
 
 <script setup lang="ts">
-import DataTablePermission from '@/components/datatables/DataTablePermission.vue';
+import DataTablePermission from '@/components/datatables/DataTableBase.vue';
 </script>
