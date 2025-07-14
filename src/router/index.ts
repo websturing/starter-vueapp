@@ -18,9 +18,9 @@ const routes = [
     path: '/login',
     component: AuthLayout,
     children: [
-      { 
-        path: '', 
-        name: 'Login', 
+      {
+        path: '',
+        name: 'Login',
         component: () => import('@/views/auth/LoginView.vue'),
         meta: {
           requiresAuth: false,
@@ -31,32 +31,52 @@ const routes = [
   {
     path: '/',
     component: AdminLayout,
-    meta: { permission: 'view.dashboard' }, 
+    redirect: {
+      name: 'dashboard'
+    },
+    meta: { permission: 'view.dashboard' },
     children: [
-      { 
-        path: 'dashboard', 
-        name: 'dashboard', 
-        component: () =>  import('@/views/admin/DashboardView.vue'),
-        meta: { permission: 'view.dashboard' }, 
+      {
+        path: 'dashboard',
+        name: 'dashboard',
+        component: () => import('@/views/admin/DashboardView.vue'),
+        meta: { permission: 'view.dashboard' },
       },
-      { 
-        path: 'permissions', 
-        name: 'permissions', 
-        component: () =>  import('@/views/admin/PermissionsView.vue'),
-        meta: { permission: 'view.dashboard' }, 
+      {
+        path: 'permissions',
+        name: 'permissions',
+        component: () => import('@/views/admin/PermissionsView.vue'),
+        meta: { permission: 'view.dashboard' },
       },
-      { 
-        path: 'users', 
-        name: 'users', 
-        component: () =>  import('@/views/admin/UsersView.vue'),
-        meta: { permission: 'view.dashboard' }, 
+      {
+        path: 'users',
+        name: 'users',
+        component: () => import('@/views/admin/UsersView.vue'),
+        meta: { permission: 'view.dashboard' },
       },
+
     ]
   },
   {
-  path: '/:pathMatch(.*)*',
-  redirect: '/login', // atau ke halaman 404
-}
+    path: '/unauthorized',
+    name: 'unauthorized',
+    component: () => import('@/views/UnauthorizedView.vue'),
+    meta: {
+      requiresAuth: false,
+    }
+  },
+  {
+    path: '/404',
+    name: 'not-found',
+    component: () => import('@/views/404.vue'),
+    meta: {
+      requiresAuth: false,
+    }
+  },
+  {
+    path: '/:pathMatch(.*)*',
+    redirect: '/404', // atau ke halaman 404
+  }
 ]
 
 const router = createRouter({
@@ -64,36 +84,54 @@ const router = createRouter({
   routes,
 })
 
-router.beforeEach(async (to, _, next) => {
-  const auth = useAuthStore()
+function getCookie(name: string): string | null {
+  const value = `; ${document.cookie}`
+  const parts = value.split(`; ${name}=`)
+  if (parts.length === 2) return parts.pop()?.split(';').shift() ?? null
+  return null
+}
 
-  const permission = to.meta.permission
-  const needsAuth = !!permission || !!to.meta.requiresAuth
+router.beforeEach(async (to) => {
+  const auth = useAuthStore();
 
-  if (!auth.user && needsAuth) {
-    try {
-      await auth.fetchUser()
-    } catch (err) {
-      return next('/login')
+  // Route yang boleh diakses tanpa auth
+  const publicRoutes = ['/login'];
+  if (publicRoutes.includes(to.path)) return true;
+
+  try {
+    const token = getCookie('XSRF-TOKEN');
+
+    // Jika tidak ada token, arahkan ke login
+    if (!token) {
+      if (to.path !== '/login') {
+        return '/login';
+      }
+      return true;
     }
-  }
 
-  if (typeof permission === 'string') {
-    if (!auth.hasPermission(permission)) {
-      return next('/login')
+    // Jika ada token tapi user belum loaded
+    if (!auth.user) {
+      await auth.fetchUser();
+
+      // Jika fetch user gagal (misal token expired)
+      if (!auth.user) {
+        document.cookie = 'XSRF-TOKEN=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+        return '/login';
+      }
     }
-  }
 
-  if (Array.isArray(permission)) {
-    const allowed = permission.every((p) => auth.hasPermission(p))
-    if (!allowed) {
-      return next('/login')
+    // Cek permission
+    if (to.meta.permission && !auth.hasPermission(to.meta.permission)) {
+      return '/unauthorized';
     }
+
+    return true;
+  } catch (error) {
+    console.error('Auth check error:', error);
+    document.cookie = 'XSRF-TOKEN=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+    return '/login';
   }
-
-  return next()
-})
-
+});
 
 
 export default router
