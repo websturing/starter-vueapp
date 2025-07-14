@@ -10,14 +10,20 @@ export const usePermissionStore = defineStore('permission', {
     }),
     actions: {
         async fetchPermissions() {
+            this.loading = true;
+            this.error = null;
             try {
                 const res = await api.get('/api/permissions')
                 this.data = res.data.data
                 this.error = null
+                console.log('Permissions fetched successfully:', this.loading);
             } catch (error) {
                 this.data = []
                 this.error = handleApiError(error)
                 throw error
+            } finally {
+                this.loading = false
+                console.log('Permissions fetched finnaly:', this.loading);
             }
         },
 

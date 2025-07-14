@@ -20,9 +20,16 @@ const props = withDefaults(defineProps<{
 
 <template>
     <div class="datatable-wrapper">
+
         <DataTable :value="data" :loading="loading" responsiveLayout="scroll" size="small">
             <template v-for="col in columns" :key="col.field">
                 <Column :field="col.field" :header="col.header" />
+            </template>
+            <template #loading>
+                <div class="custom-loading-overlay">
+                    <i class="pi pi-spinner pi-spin" style="font-size: 2rem; color: #00ff00;"></i>
+                    <!-- Atau gunakan SVG/animasi CSS -->
+                </div>
             </template>
         </DataTable>
 
@@ -30,3 +37,17 @@ const props = withDefaults(defineProps<{
             :rowsPerPageOptions="rowsPerPageOptions" />
     </div>
 </template>
+<style scoped>
+.custom-loading-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%) !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+}
+</style>
