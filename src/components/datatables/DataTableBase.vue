@@ -19,12 +19,14 @@ const props = withDefaults(defineProps<{
 </script>
 
 <template>
-    <DataTable :value="data" :loading="loading" showGridlines responsiveLayout="scroll">
-        <template v-for="col in columns" :key="col.field">
-            <Column :field="col.field" :header="col.header" />
-        </template>
-    </DataTable>
+    <div class="datatable-wrapper">
+        <DataTable :value="data" :loading="loading" responsiveLayout="scroll" size="small">
+            <template v-for="col in columns" :key="col.field">
+                <Column :field="col.field" :header="col.header" />
+            </template>
+        </DataTable>
 
-    <Paginator :rows="rows" :totalRecords="totalRecords" :first="page * rows" @page="onPageChange"
-        :rowsPerPageOptions="rowsPerPageOptions" />
+        <Paginator :rows="rows" :totalRecords="totalRecords" :first="page * rows" @page="onPageChange"
+            :rowsPerPageOptions="rowsPerPageOptions" />
+    </div>
 </template>
