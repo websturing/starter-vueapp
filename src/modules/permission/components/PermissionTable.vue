@@ -17,6 +17,7 @@ const {
 } = usePermissionTable()
 
 const columns = [
+    { field: 'no', header: 'No' },
     { field: 'name', header: 'Module Name' },
     { field: 'slug', header: 'Slug' },
 ]
@@ -30,12 +31,6 @@ const columns = [
 
             <BaseDataTable :columns="columns" :data="data" :loading="loading" :page="page" :rows="rows"
                 :totalRecords="totalRecords" :onPageChange="onPageChange">
-                <template #row="slotProps">
-                    <tr>
-                        <td>{{ (page * rows) + slotProps.index + 1 }}</td>
-                        <td>{{ slotProps.data.slug }}</td>
-                    </tr>
-                </template>
             </BaseDataTable>
         </DataTableAction>
     </div>
