@@ -17,11 +17,19 @@ import PrimeVue from 'primevue/config';
 import ConfirmationService from 'primevue/confirmationservice';
 import DataTable from 'primevue/datatable';
 import Dialog from 'primevue/dialog';
+import FloatLabel from 'primevue/floatlabel';
 import IconField from 'primevue/iconfield';
 import InputGroup from 'primevue/inputgroup';
 import InputGroupAddon from 'primevue/inputgroupaddon';
 import InputIcon from 'primevue/inputicon';
 import InputText from 'primevue/inputtext';
+import Select from 'primevue/select';
+import ToggleButton from 'primevue/togglebutton';
+
+import Checkbox from 'primevue/checkbox';
+import CheckboxGroup from 'primevue/checkboxgroup';
+
+
 
 import Paginator from 'primevue/paginator';
 
@@ -57,6 +65,11 @@ app.component('Button', Button)
 app.component('IconField', IconField)
 app.component('InputIcon', InputIcon)
 app.component('Dialog', Dialog)
+app.component('FloatLabel', FloatLabel)
+app.component('ToggleButton', ToggleButton)
+app.component('Select', Select)
+app.component('Checkbox', Checkbox)
+app.component('CheckboxGroup', CheckboxGroup)
 app.use(ConfirmationService)
 app.use(router)
 app.use(notivue)

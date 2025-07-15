@@ -24,18 +24,13 @@ export const useAuthStore = defineStore('auth', {
   getters: {
     flattenedPermissions: (state) => {
       if (!state.permissions) {
-        console.warn('Permissions not loaded');
         return [];
       }
-
-      console.log('Raw permissions:', state.permissions);
-
       const result = state.permissions.flatMap((menu: Menu) => {
         // Gunakan menu.permissions bukan menu.permission
         return menu.permissions?.map(item => item.permission_name) || [];
       });
 
-      console.log('Flattened result:', result);
       return result;
     }
   },
@@ -90,7 +85,6 @@ export const useAuthStore = defineStore('auth', {
       try {
         await api.post('/api/auth/logout');
       } catch (error) {
-        console.error('Logout failed:', error);
       } finally {
         // Bersihkan semua state
         this.user = null;
@@ -106,17 +100,12 @@ export const useAuthStore = defineStore('auth', {
     hasPermission(perm: string | string[]): boolean {
       try {
         if (!this.flattenedPermissions.length) {
-          console.warn('No permissions available')
           return false
         }
 
         const permsToCheck = Array.isArray(perm) ? perm : [perm]
         const result = permsToCheck.every(p => this.flattenedPermissions.includes(p))
 
-        console.log(`Checking ${permsToCheck.join(', ')}:`, {
-          available: this.flattenedPermissions,
-          result
-        })
 
         return result
       } catch (error) {
