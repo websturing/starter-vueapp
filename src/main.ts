@@ -16,8 +16,11 @@ import Column from 'primevue/column';
 import PrimeVue from 'primevue/config';
 import ConfirmationService from 'primevue/confirmationservice';
 import DataTable from 'primevue/datatable';
+import Dialog from 'primevue/dialog';
+import IconField from 'primevue/iconfield';
 import InputGroup from 'primevue/inputgroup';
 import InputGroupAddon from 'primevue/inputgroupaddon';
+import InputIcon from 'primevue/inputicon';
 import InputText from 'primevue/inputtext';
 
 import Paginator from 'primevue/paginator';
@@ -51,6 +54,9 @@ app.component('InputText', InputText)
 app.component('InputGroup', InputGroup)
 app.component('InputGroupAddon', InputGroupAddon)
 app.component('Button', Button)
+app.component('IconField', IconField)
+app.component('InputIcon', InputIcon)
+app.component('Dialog', Dialog)
 app.use(ConfirmationService)
 app.use(router)
 app.use(notivue)

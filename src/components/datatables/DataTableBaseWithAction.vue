@@ -26,14 +26,14 @@ const emit = defineEmits(['update:search'])
         <h4 v-if="title" class="text-xl font-semibold mb-4">{{ title }}</h4>
         <div class="d-flex justify-content-between items-center align-items-center mb-2">
             <div>
-                <InputGroup>
-                    <InputGroupAddon>
-                        <i class="pi pi-search"></i>
-                    </InputGroupAddon>
+                <IconField>
+                    <InputIcon>
+                        <i class="pi pi-search" />
+                    </InputIcon>
                     <InputText :value="props.search"
                         @input="e => props.onSearch?.((e.target as HTMLInputElement).value)" placeholder="Search..."
                         size="small" />
-                </InputGroup>
+                </IconField>
             </div>
             <div class="d-flex gap-1 align-items-center ">
                 <Button label="Refresh" icon="pi pi-refresh" @click="onRefresh" severity="warn" size="small"
