@@ -21,10 +21,16 @@ const props = withDefaults(defineProps<{
 <template>
     <div class="datatable-wrapper">
 
-        <DataTable :value="data" :loading="loading" responsiveLayout="scroll" size="small">
+        <DataTable :value="data" :loading="loading" :paginator="true" :rows="rows" :lazy="true" :first="page * rows"
+            :totalRecords="totalRecords" :rowsPerPageOptions="rowsPerPageOptions" @page="onPageChange"
+            responsiveLayout="scroll" dataKey="id" size="small">
+
             <template v-for="col in columns" :key="col.field">
                 <Column :field="col.field" :header="col.header" />
             </template>
+
+
+
             <template #loading>
                 <div class="custom-loading-overlay">
                     <i class="pi pi-spinner pi-spin" style="font-size: 2rem; color: #00ff00;"></i>
@@ -32,9 +38,6 @@ const props = withDefaults(defineProps<{
                 </div>
             </template>
         </DataTable>
-
-        <Paginator :rows="rows" :totalRecords="totalRecords" :first="page * rows" @page="onPageChange"
-            :rowsPerPageOptions="rowsPerPageOptions" />
     </div>
 </template>
 <style scoped>

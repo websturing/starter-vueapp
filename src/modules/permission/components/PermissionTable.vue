@@ -12,6 +12,7 @@ const {
     data,
     totalRecords,
     loading,
+    onPageChange,
     refresh
 } = usePermissionTable()
 
@@ -24,23 +25,15 @@ const columns = [
 <template>
     <div class="space-y-4">
         <DataTableAction :search="search" :onSearch="val => search = val" :onRefresh="refresh"
-            :onCreate="() => router.push('/users/create')" :showCreate="true" :labelCreate="'Create Permission'">
+            :onPageChange="onPageChange" :onCreate="() => router.push('/users/create')" :showCreate="true"
+            :labelCreate="'Create Permission'">
 
             <BaseDataTable :columns="columns" :data="data" :loading="loading" :page="page" :rows="rows"
-                :totalRecords="totalRecords" :onPageChange="e => page = e.page">
+                :totalRecords="totalRecords" :onPageChange="onPageChange">
                 <template #row="slotProps">
                     <tr>
                         <td>{{ slotProps.data.name }}</td>
                         <td>{{ slotProps.data.slug }}</td>
-                    </tr>
-                    <tr>
-                        <td colspan="2">
-                            <ul class="pl-4 text-sm text-gray-500 list-disc">
-                                <li v-for="perm in slotProps.data.permissions" :key="perm.permission_name">
-                                    {{ perm.action }} – {{ perm.permission_name }}
-                                </li>
-                            </ul>
-                        </td>
                     </tr>
                 </template>
             </BaseDataTable>

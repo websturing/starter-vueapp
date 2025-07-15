@@ -30,8 +30,18 @@ export function usePermissionTable() {
         await permissionStore.fetchPermissions()
     }
 
-    // initial fetch
-    watch(search, refresh, { immediate: true })
+    const onPageChange = (e: any) => {
+        page.value = e.page
+        rows.value = e.rows
+    }
+
+    watch(search, async () => {
+        page.value = 0
+        if (permissionStore.data.length === 0) {
+            await refresh()
+        }
+    }, { immediate: true })
+
 
     return {
         search,
@@ -40,6 +50,7 @@ export function usePermissionTable() {
         data: paginated,
         totalRecords: computed(() => filtered.value.length),
         loading: computed(() => permissionStore.loading),
-        refresh
+        refresh,
+        onPageChange,
     }
 }
