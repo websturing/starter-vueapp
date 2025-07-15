@@ -32,7 +32,7 @@ const columns = [
                 :totalRecords="totalRecords" :onPageChange="onPageChange">
                 <template #row="slotProps">
                     <tr>
-                        <td>{{ slotProps.data.name }}</td>
+                        <td>{{ (page * rows) + slotProps.index + 1 }}</td>
                         <td>{{ slotProps.data.slug }}</td>
                     </tr>
                 </template>

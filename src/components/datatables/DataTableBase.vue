@@ -26,8 +26,16 @@ const props = withDefaults(defineProps<{
             responsiveLayout="scroll" dataKey="id" size="small">
 
             <template v-for="col in columns" :key="col.field">
-                <Column :field="col.field" :header="col.header" />
+                <Column v-if="col.field === 'no'" :header="col.header">
+                    <template #body="slotProps">
+                        {{ (page * rows) + slotProps.index + 1 }}
+                    </template>
+                </Column>
+
+                <Column v-else :field="col.field" :header="col.header" />
             </template>
+
+
 
 
 
