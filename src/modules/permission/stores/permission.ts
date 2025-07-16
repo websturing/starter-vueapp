@@ -13,7 +13,7 @@ export const usePermissionStore = defineStore('permission', {
             this.loading = true;
             this.error = null;
             try {
-                const res = await api.get('/api/permissions')
+                const res = await api.get('/api/module')
                 this.data = res.data.data
                 this.error = null
             } catch (error) {
