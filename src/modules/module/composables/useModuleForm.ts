@@ -9,14 +9,8 @@ export function useModuleForm() {
     const { data: parentData } = storeToRefs(moduleStore)
 
     const parentId = ref(null)
-    const create = ref(false)
-    const update = ref(false)
-    const read = ref(true)
-    const deleteAction = ref(false)
-    const upload = ref(false)
-    const download = ref(false)
 
-    const { handleSubmit, errors, isSubmitting } = useForm<{
+    const { handleSubmit, errors, isSubmitting, resetForm: veeResetForm } = useForm<{
         name: string
         slug: string
     }>({
@@ -32,14 +26,35 @@ export function useModuleForm() {
     const isEdit = ref(false)
 
     const resetForm = () => {
-        name.value = ''
-        name.value = ''
+        veeResetForm({
+            values: {
+                name: '',
+                slug: ''
+            },
+            errors: {} // Reset semua error
+        })
         parentId.value = null
+        isParent.value = false
     }
 
 
     const onSubmit = handleSubmit(async (values) => {
+        try {
+            const moduleData = {
+                name: values.name,
+                slug: values.slug,
+                parent_id: parentId.value
+            };
 
+            if (isEdit.value) {
+                // Logika untuk edit jika diperlukan
+            } else {
+                await moduleStore.createModule(moduleData);
+                resetForm();
+            }
+        } catch (error) {
+            console.error('Error submitting form:', error);
+        }
     });
 
 
@@ -65,12 +80,6 @@ export function useModuleForm() {
         name,
         slug,
         parentId,
-        create,
-        update,
-        read,
-        deleteAction,
-        upload,
-        download,
         isParent,
         isEdit,
         resetForm,

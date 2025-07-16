@@ -24,7 +24,20 @@ export const useModuleStore = defineStore('module', {
                 this.loading = false
             }
         },
-
+        async createModule(moduleData: any) {
+            this.loading = true;
+            this.error = null;
+            try {
+                const res = await api.post('/api/module', moduleData)
+                this.data.push(res.data.data)
+                this.error = null
+            } catch (error) {
+                this.error = handleApiError(error)
+                throw error
+            } finally {
+                this.loading = false
+            }
+        },
     }
 
 });
