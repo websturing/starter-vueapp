@@ -9,13 +9,9 @@ export function useModuleTable() {
     const rows = ref(10)
 
     const filtered = computed(() => {
-        console.log('[DEBUG] search value:', searchRef.value)
-        console.log('[DEBUG] moduleStore.data:', moduleStore.data)
         if (!searchRef.value) return moduleStore.data
 
-
         return moduleStore.data.filter(module =>
-
             module.name.toLowerCase().includes(searchRef.value.toLowerCase()) ||
             module.slug.toLowerCase().includes(searchRef.value.toLowerCase())
         )
@@ -33,6 +29,13 @@ export function useModuleTable() {
     const onPageChange = (e: any) => {
         page.value = e.page
         rows.value = e.rows
+    }
+
+    const onRowEdit = (row: any) => {
+        alert(`Edit Module: ${row.name}`)
+    }
+    const onRowDelete = async (row: any) => {
+        await moduleStore.deleteModule(row.id)
     }
 
     watch(searchRef, async () => {
@@ -57,5 +60,7 @@ export function useModuleTable() {
         loading: computed(() => moduleStore.loading),
         refresh,
         onPageChange,
+        onRowEdit,
+        onRowDelete
     }
 }

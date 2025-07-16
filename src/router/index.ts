@@ -40,19 +40,19 @@ const routes = [
         path: 'dashboard',
         name: 'dashboard',
         component: () => import('@/views/admin/DashboardView.vue'),
-        meta: { permission: 'view.dashboard' },
+        meta: { permission: 'dashboard.read' },
       },
       {
         path: 'permissions',
         name: 'permissions',
         component: () => import('@/views/admin/PermissionsView.vue'),
-        meta: { permission: 'view.dashboard' },
+        meta: { permission: 'dashboard.read' },
       },
       {
         path: 'users',
         name: 'users',
         component: () => import('@/views/admin/UsersView.vue'),
-        meta: { permission: 'view.dashboard' },
+        meta: { permission: 'dashboard.read' },
       },
 
     ]

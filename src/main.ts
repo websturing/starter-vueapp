@@ -12,9 +12,12 @@ import '@assets/js/argon-dashboard.min.js?v=2.1.0';
 import Aura from '@primevue/themes/aura';
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate';
 import Button from 'primevue/button';
+import Checkbox from 'primevue/checkbox';
+import CheckboxGroup from 'primevue/checkboxgroup';
 import Column from 'primevue/column';
 import PrimeVue from 'primevue/config';
 import ConfirmationService from 'primevue/confirmationservice';
+import ConfirmPopup from 'primevue/confirmpopup';
 import DataTable from 'primevue/datatable';
 import Dialog from 'primevue/dialog';
 import FloatLabel from 'primevue/floatlabel';
@@ -24,10 +27,10 @@ import InputGroupAddon from 'primevue/inputgroupaddon';
 import InputIcon from 'primevue/inputicon';
 import InputText from 'primevue/inputtext';
 import Select from 'primevue/select';
+import Toast from 'primevue/toast';
 import ToggleButton from 'primevue/togglebutton';
+import Tooltip from 'primevue/tooltip';
 
-import Checkbox from 'primevue/checkbox';
-import CheckboxGroup from 'primevue/checkboxgroup';
 
 
 
@@ -70,6 +73,9 @@ app.component('ToggleButton', ToggleButton)
 app.component('Select', Select)
 app.component('Checkbox', Checkbox)
 app.component('CheckboxGroup', CheckboxGroup)
+app.component('ConfirmPopup', ConfirmPopup)
+app.component('Toast', Toast)
+app.directive('tooltip', Tooltip);
 app.use(ConfirmationService)
 app.use(router)
 app.use(notivue)

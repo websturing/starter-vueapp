@@ -13,13 +13,16 @@ const {
     totalRecords,
     loading,
     onPageChange,
-    refresh
+    refresh,
+    onRowEdit,
+    onRowDelete,
 } = useModuleTable()
 
 const columns = [
     { field: 'no', header: 'No' },
     { field: 'name', header: 'Module Name' },
     { field: 'slug', header: 'Slug' },
+    { field: 'actions', header: 'actions' },
 ]
 </script>
 
@@ -27,8 +30,11 @@ const columns = [
     <div class="space-y-4">
         <DataTableAction v-model:search="search" :onRefresh="refresh" :onPageChange="onPageChange"
             :onCreate="() => router.push('/users/create')" :showCreate="true" labelCreate="Create Permission">
+
             <BaseDataTable :columns="columns" :data="data" :loading="loading" :page="page" :rows="rows"
-                :totalRecords="totalRecords" :onPageChange="onPageChange" />
+                :totalRecords="totalRecords" :onPageChange="onPageChange" @edit-row="onRowEdit"
+                @delete-row="onRowDelete" :actionLabels="{ edit: 'Modify Module', delete: 'Remove Module' }" />
+
         </DataTableAction>
     </div>
 </template>
