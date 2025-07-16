@@ -43,9 +43,8 @@ export const useModuleStore = defineStore('module', {
             this.loading = true;
             this.error = null;
             try {
-                const res = await api.post('/api/module', moduleData)
-                this.data.push(res.data.data)
-                this.data = this.data.sort((a, b) => a.name.localeCompare(b.name))
+                const res = await api.post(`/api/module/${id}`, moduleData)
+                this.fetchModule()
                 this.error = null
             } catch (error) {
                 this.error = handleApiError(error)

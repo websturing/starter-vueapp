@@ -196,9 +196,9 @@
                 </div>
             </nav>
             <router-view />
-
+            <ConfirmDialog></ConfirmDialog>
         </main>
-        <ConfirmDialog></ConfirmDialog>
+
     </div>
 </template>
 
@@ -206,6 +206,7 @@
 import { getModulesFromRoute } from '@/lib/routeParser';
 import { useAuthStore } from '@/stores/auth';
 import { push } from 'notivue';
+import { ConfirmDialog } from 'primevue';
 import { useConfirm } from "primevue/useconfirm";
 import { computed } from 'vue';
 import { useRoute, useRouter } from 'vue-router';

@@ -28,7 +28,7 @@ export function useModuleForm(initialData: any = null) {
     const isEdit = ref(!!initialData?.id) // true kalau edit
 
 
-    console.log('Initial Data:', initialData)
+    console.log('edit Data:', isEdit)
     console.log('Initial Data:', !initialData?.parent_id)
 
     const resetForm = () => {
@@ -51,7 +51,8 @@ export function useModuleForm(initialData: any = null) {
                 parent_id: parentId.value
             }
 
-            if (isEdit.value && initialData?.id) {
+            if (isEdit.value) {
+                console.log('INI EDIT')
                 await moduleStore.updateModule(initialData.id, moduleData)
             } else {
                 await moduleStore.createModule(moduleData)
