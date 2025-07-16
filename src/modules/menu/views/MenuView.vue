@@ -1,11 +1,11 @@
 <template>
     <div>
-        <DataTablePermission />
-        <FormPermission />
+        <DataTableModule />
+        <FormModule />
     </div>
 </template>
 
 <script setup lang="ts">
-import FormPermission from '@module/permission/components/PermissionForm.vue';
-import DataTablePermission from '@module/permission/components/PermissionTable.vue';
+import FormModule from '@/modules/module/components/ModuleForm.vue';
+import DataTableModule from '@/modules/module/components/ModuleTable.vue';
 </script>

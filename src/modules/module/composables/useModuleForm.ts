@@ -1,12 +1,12 @@
-import { usePermissionStore } from '@module/permission/stores/permission'
+import { useModuleStore } from '@/modules/module/stores/module'
 import { storeToRefs } from 'pinia'
 import { useField, useForm } from 'vee-validate'
 import { onMounted, ref, watch } from 'vue'
-import { permissionModuleCreateSchema } from '../schemas/permissionSchema'
+import { permissionModuleCreateSchema } from '../schemas/moduleSchema'
 
-export function usePermissionForm() {
-    const permissionStore = usePermissionStore()
-    const { data: parentData } = storeToRefs(permissionStore)
+export function useModuleForm() {
+    const moduleStore = useModuleStore()
+    const { data: parentData } = storeToRefs(moduleStore)
 
     const parentId = ref(null)
     const create = ref(false)
@@ -46,7 +46,7 @@ export function usePermissionForm() {
     /** FUNCTION BASE */
     onMounted(async () => {
         try {
-            await permissionStore.fetchPermissions()
+            await moduleStore.fetchModule()
         } catch (error) {
             console.error('Error fetching permissions:', error)
         }

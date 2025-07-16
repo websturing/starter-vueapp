@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import BaseDataTable from '@/components/datatables/DataTableBase.vue'
 import DataTableAction from '@/components/datatables/DataTableBaseWithAction.vue'
-import { usePermissionTable } from '@module/permission/composables/usePermissionTable'
+import { useModuleTable } from '@/modules/module/composables/useModuleTable'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
@@ -14,7 +14,7 @@ const {
     loading,
     onPageChange,
     refresh
-} = usePermissionTable()
+} = useModuleTable()
 
 const columns = [
     { field: 'no', header: 'No' },

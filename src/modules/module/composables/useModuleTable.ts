@@ -1,17 +1,17 @@
-import { usePermissionStore } from '@module/permission/stores/permission'
+import { useModuleStore } from '@/modules/module/stores/module'
 import { computed, ref, watch } from 'vue'
 
-export function usePermissionTable() {
-    const permissionStore = usePermissionStore()
+export function useModuleTable() {
+    const moduleStore = useModuleStore()
 
     const search = ref('')
     const page = ref(0)
     const rows = ref(10)
 
     const filtered = computed(() => {
-        if (!search.value) return permissionStore.data
+        if (!search.value) return moduleStore.data
 
-        return permissionStore.data.filter(module =>
+        return moduleStore.data.filter(module =>
             module.name.toLowerCase().includes(search.value.toLowerCase()) ||
             module.slug.toLowerCase().includes(search.value.toLowerCase()) ||
             module.permissions.some((p: any) =>
@@ -27,7 +27,7 @@ export function usePermissionTable() {
     })
 
     const refresh = async () => {
-        await permissionStore.fetchPermissions()
+        await moduleStore.fetchModule()
     }
 
     const onPageChange = (e: any) => {
@@ -37,7 +37,7 @@ export function usePermissionTable() {
 
     watch(search, async () => {
         page.value = 0
-        if (permissionStore.data.length === 0) {
+        if (moduleStore.data.length === 0) {
             await refresh()
         }
     }, { immediate: true })
@@ -49,7 +49,7 @@ export function usePermissionTable() {
         rows,
         data: paginated,
         totalRecords: computed(() => filtered.value.length),
-        loading: computed(() => permissionStore.loading),
+        loading: computed(() => moduleStore.loading),
         refresh,
         onPageChange,
     }

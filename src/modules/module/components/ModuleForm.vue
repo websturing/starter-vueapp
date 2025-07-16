@@ -75,7 +75,7 @@
 </template>
 
 <script setup lang="ts">
-import { usePermissionForm } from '@module/permission/composables/usePermissionForm';
+import { useModuleForm } from '@/modules/module/composables/useModuleForm';
 import { ref } from 'vue';
 const {
     name: moduleName,
@@ -91,7 +91,7 @@ const {
     download,
     errors,
     onSubmit
-} = usePermissionForm();
+} = useModuleForm();
 
 const selectedCity = ref();
 const cities = ref([

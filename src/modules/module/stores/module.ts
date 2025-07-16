@@ -2,14 +2,14 @@ import api from '@/lib/api';
 import { handleApiError } from '@/types/errorTypes';
 import { defineStore } from 'pinia';
 
-export const usePermissionStore = defineStore('permission', {
+export const useModuleStore = defineStore('module', {
     state: () => ({
         data: [] as any[],
         loading: false,
         error: null as string | null,
     }),
     actions: {
-        async fetchPermissions() {
+        async fetchModule() {
             this.loading = true;
             this.error = null;
             try {
