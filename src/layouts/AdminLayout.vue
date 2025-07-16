@@ -64,6 +64,7 @@
             </div>
         </aside>
         <main class="main-content position-relative border-radius-lg ">
+
             <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl " id="navbarBlur"
                 data-scroll="false">
                 <div class="container-fluid py-1 px-3">
@@ -195,8 +196,9 @@
                 </div>
             </nav>
             <router-view />
-            <ConfirmDialog></ConfirmDialog>
+
         </main>
+        <ConfirmDialog></ConfirmDialog>
     </div>
 </template>
 
@@ -204,7 +206,6 @@
 import { getModulesFromRoute } from '@/lib/routeParser';
 import { useAuthStore } from '@/stores/auth';
 import { push } from 'notivue';
-import ConfirmDialog from 'primevue/confirmdialog';
 import { useConfirm } from "primevue/useconfirm";
 import { computed } from 'vue';
 import { useRoute, useRouter } from 'vue-router';

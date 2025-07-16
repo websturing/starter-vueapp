@@ -23,9 +23,10 @@
                     optionValue="id" placeholder="Select parent module" />
             </div>
 
-            <div class="flex justify-end gap-2">
-                <Button type="button" label="Cancel" severity="secondary" @click="resetForm" />
-                <Button type="submit" :label="isEdit ? 'Update' : 'Save'" />
+            <div class="d-flex justify-end gap-2">
+                <Button type="button" label="Cancel" variant="text" severity="danger" @click="resetForm" />
+                <Button type="submit" icon="icon icon-save-for-later-2"
+                    :label="isEdit ? 'Apply Changes' : 'Create New'" />
             </div>
         </form>
     </div>
