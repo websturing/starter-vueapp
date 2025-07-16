@@ -4,6 +4,7 @@ import DataTableAction from '@/components/datatables/DataTableBaseWithAction.vue
 import { useModuleTable } from '@/modules/module/composables/useModuleTable'
 import { useRouter } from 'vue-router'
 
+const emit = defineEmits(['edit', 'create'])
 const router = useRouter()
 const {
     search,
@@ -24,15 +25,22 @@ const columns = [
     { field: 'slug', header: 'Slug' },
     { field: 'actions', header: 'actions' },
 ]
+
+function handleEdit(row: any) {
+    emit('edit', row)
+}
+function handleCreate(row: any) {
+    emit('create', row)
+}
 </script>
 
 <template>
     <div class="space-y-4">
         <DataTableAction v-model:search="search" :onRefresh="refresh" :onPageChange="onPageChange"
-            :onCreate="() => router.push('/users/create')" :showCreate="true" labelCreate="Create Permission">
+            :onCreate="() => emit('edit', null)" :showCreate="true" labelCreate="Create Permission">
 
             <BaseDataTable :columns="columns" :data="data" :loading="loading" :page="page" :rows="rows"
-                :totalRecords="totalRecords" :onPageChange="onPageChange" @edit-row="onRowEdit"
+                :totalRecords="totalRecords" :onPageChange="onPageChange" @edit-row="handleEdit"
                 @delete-row="onRowDelete" :actionLabels="{ edit: 'Modify Module', delete: 'Remove Module' }" />
 
         </DataTableAction>

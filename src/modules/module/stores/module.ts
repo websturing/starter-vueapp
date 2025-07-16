@@ -39,6 +39,21 @@ export const useModuleStore = defineStore('module', {
                 this.loading = false
             }
         },
+        async updateModule(id: number, moduleData: any) {
+            this.loading = true;
+            this.error = null;
+            try {
+                const res = await api.post('/api/module', moduleData)
+                this.data.push(res.data.data)
+                this.data = this.data.sort((a, b) => a.name.localeCompare(b.name))
+                this.error = null
+            } catch (error) {
+                this.error = handleApiError(error)
+                throw error
+            } finally {
+                this.loading = false
+            }
+        },
         async deleteModule(id: number) {
             this.loading = true;
             this.error = null;
