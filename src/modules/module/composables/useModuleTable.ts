@@ -4,20 +4,20 @@ import { computed, ref, watch } from 'vue'
 export function useModuleTable() {
     const moduleStore = useModuleStore()
 
-    const search = ref('')
+    const searchRef = ref('') // rename untuk hindari konflik dengan prop `search`
     const page = ref(0)
     const rows = ref(10)
 
     const filtered = computed(() => {
-        if (!search.value) return moduleStore.data
+        console.log('[DEBUG] search value:', searchRef.value)
+        console.log('[DEBUG] moduleStore.data:', moduleStore.data)
+        if (!searchRef.value) return moduleStore.data
+
 
         return moduleStore.data.filter(module =>
-            module.name.toLowerCase().includes(search.value.toLowerCase()) ||
-            module.slug.toLowerCase().includes(search.value.toLowerCase()) ||
-            module.permissions.some((p: any) =>
-                p.action.toLowerCase().includes(search.value.toLowerCase()) ||
-                p.permission_name.toLowerCase().includes(search.value.toLowerCase())
-            )
+
+            module.name.toLowerCase().includes(searchRef.value.toLowerCase()) ||
+            module.slug.toLowerCase().includes(searchRef.value.toLowerCase())
         )
     })
 
@@ -35,13 +35,18 @@ export function useModuleTable() {
         rows.value = e.rows
     }
 
-    watch(search, async () => {
+    watch(searchRef, async () => {
         page.value = 0
         if (moduleStore.data.length === 0) {
             await refresh()
         }
     }, { immediate: true })
 
+    // expose computed with getter/setter for v-model compatibility
+    const search = computed({
+        get: () => searchRef.value,
+        set: val => searchRef.value = val
+    })
 
     return {
         search,

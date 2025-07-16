@@ -25,13 +25,10 @@ const columns = [
 
 <template>
     <div class="space-y-4">
-        <DataTableAction :search="search" :onSearch="val => search = val" :onRefresh="refresh"
-            :onPageChange="onPageChange" :onCreate="() => router.push('/users/create')" :showCreate="true"
-            :labelCreate="'Create Permission'">
-
+        <DataTableAction v-model:search="search" :onRefresh="refresh" :onPageChange="onPageChange"
+            :onCreate="() => router.push('/users/create')" :showCreate="true" labelCreate="Create Permission">
             <BaseDataTable :columns="columns" :data="data" :loading="loading" :page="page" :rows="rows"
-                :totalRecords="totalRecords" :onPageChange="onPageChange">
-            </BaseDataTable>
+                :totalRecords="totalRecords" :onPageChange="onPageChange" />
         </DataTableAction>
     </div>
 </template>
