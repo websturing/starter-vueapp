@@ -24,7 +24,7 @@
             </div>
 
             <div class="d-flex justify-end gap-2">
-                <Button type="button" label="Cancel" variant="text" severity="danger" @click="resetForm" />
+                <Button type="button" label="Reset" variant="text" severity="danger" @click="resetForm" />
                 <Button type="submit" icon="icon icon-save-for-later-2"
                     :label="isEdit ? 'Apply Changes' : 'Create New'" />
             </div>

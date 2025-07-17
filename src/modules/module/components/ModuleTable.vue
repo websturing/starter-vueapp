@@ -23,8 +23,10 @@ const columns = [
     { field: 'no', header: 'No' },
     { field: 'name', header: 'Module Name' },
     { field: 'slug', header: 'Slug' },
+    { field: 'parent', header: 'parent' },
     { field: 'actions', header: 'actions' },
 ]
+
 
 function handleEdit(row: any) {
     emit('edit', row)
@@ -46,3 +48,13 @@ function handleCreate(row: any) {
         </DataTableAction>
     </div>
 </template>
+<style scoped>
+::v-deep(.has-parent) {
+    background-color: #f0f8ff;
+    font-weight: bold;
+}
+
+::v-deep(.no-parent) {
+    background-color: #fff7f7;
+}
+</style>

@@ -7,7 +7,7 @@ const props = withDefaults(defineProps<{
     page?: number
     rows?: number
     rowsPerPageOptions?: number[]
-    onPageChange?: (e: any) => void,
+    onPageChange?: (e: any) => void
     actionLabels?: {
         edit?: string
         delete?: string
