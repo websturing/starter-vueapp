@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-lg-12 mb-lg-0 mb-4">
                 <div class="card ">
-                    <Tabs value="1" class="p-2">
+                    <Tabs value="0" class="p-2">
                         <TabList>
                             <Tab value="0">
                                 <i class="icon icon-hair-man  text-sm opacity-10"></i>

@@ -3,3 +3,12 @@
     border-radius: 8px;
     overflow: hidden;
 }
+
+.table-permissions {
+    width: 100%;
+}
+
+.table-permissions th,
+td {
+    padding: 5px;
+}

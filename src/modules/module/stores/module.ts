@@ -24,6 +24,21 @@ export const useModuleStore = defineStore('module', {
                 this.loading = false
             }
         },
+        async fetchModuleWithPermissions() {
+            this.loading = true;
+            this.error = null;
+            try {
+                const res = await api.get('/api/module/withpermissions')
+                this.data = res.data.data
+                this.error = null
+            } catch (error) {
+                this.data = []
+                this.error = handleApiError(error)
+                throw error
+            } finally {
+                this.loading = false
+            }
+        },
         async createModule(moduleData: any) {
             this.loading = true;
             this.error = null;

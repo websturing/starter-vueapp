@@ -2,7 +2,7 @@ import api from '@/lib/api';
 import { handleApiError } from '@/types/errorTypes';
 import { defineStore } from 'pinia';
 
-export const useRoleModule = defineStore('role', {
+export const useRoleStore = defineStore('role', {
     state: () => ({
         data: [] as any[],
         loading: false,
@@ -28,7 +28,7 @@ export const useRoleModule = defineStore('role', {
             this.loading = true;
             this.error = null;
             try {
-                const res = await api.post('/api/module', moduleData)
+                const res = await api.post('/api/roles', moduleData)
                 this.data.push(res.data.data)
                 this.data = this.data.sort((a, b) => a.name.localeCompare(b.name))
                 this.error = null
@@ -57,7 +57,7 @@ export const useRoleModule = defineStore('role', {
             this.loading = true;
             this.error = null;
             try {
-                const res = await api.delete(`/api/module/${id}`)
+                const res = await api.delete(`/api/roles/${id}`)
                 this.data = this.data.filter(module => module.id !== id)
                 this.error = null
             } catch (error) {

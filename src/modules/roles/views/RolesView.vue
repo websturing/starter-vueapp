@@ -1,7 +1,10 @@
 <template>
     <div>
-        <h1>Roles Views</h1>
-        <p>This is the Users view.</p>
-        <!-- Add your user management components here -->
+        <DataTable />
+        <RoleForm />
     </div>
 </template>
+<script setup lang="ts">
+import DataTable from '@/modules/roles/components/RolesTable.vue';
+import RoleForm from "@module/roles/components/RolesForm.vue";
+</script>
