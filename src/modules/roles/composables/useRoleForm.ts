@@ -14,16 +14,19 @@ export function useRoleForm(initialData: any = null) {
 
     const { handleSubmit, errors, isSubmitting, resetForm: veeResetForm, setValues } = useForm<{
         name: string,
-        guard_name: string
+        guard_name: string,
+        permissions: Array<number>
     }>({
         validationSchema: roleCreateSchema,
         initialValues: {
             name: initialData?.name || '',
-            guard_name: initialData?.guard_name || 'web'
+            guard_name: initialData?.guard_name || 'web',
+            permissions: initialData?.permissions || []
         }
     })
 
     const { value: name } = useField<string>('name')
+    const { value: permissions } = useField<Array<number>>('permissions')
     const isEdit = ref(!!initialData?.id) // true kalau edit
 
     const resetForm = () => {
@@ -39,7 +42,8 @@ export function useRoleForm(initialData: any = null) {
         try {
             const moduleData = {
                 name: values.name,
-                guard_name: values.guard_name
+                guard_name: values.guard_name,
+                permissions: values.permissions
             }
 
             if (isEdit.value) {
@@ -67,6 +71,7 @@ export function useRoleForm(initialData: any = null) {
 
     return {
         name,
+        permissions,
         isEdit,
         onSubmit,
         resetForm,
