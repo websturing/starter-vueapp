@@ -15,7 +15,7 @@ const emit = defineEmits(['update:permissionCheckBox'])
 // Helper untuk cari ID berdasarkan action
 function findPermissionId(perms: any[] = [], action: string) {
     const found = perms.find((p) => p.action === action)
-    return found ? found.id : null
+    return found ? found.permission_id : null
 }
 </script>
 
