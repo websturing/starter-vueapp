@@ -3,8 +3,6 @@
         <DataTableModule @edit="handleEdit" />
 
 
-
-
         <Dialog v-model:visible="showForm" modal :header="title" style="width: 50rem">
             <FormModule :initialData="selectedModule" @close="showForm = false" />
         </Dialog>

@@ -32,6 +32,7 @@ export const useRoleStore = defineStore('role', {
                 this.data.push(res.data.data)
                 this.data = this.data.sort((a, b) => a.name.localeCompare(b.name))
                 this.error = null
+                return res.data
             } catch (error) {
                 this.error = handleApiError(error)
                 throw error
@@ -43,9 +44,10 @@ export const useRoleStore = defineStore('role', {
             this.loading = true;
             this.error = null;
             try {
-                const res = await api.post(`/api/module/${id}`, moduleData)
+                const res = await api.post(`/api/roles/${id}`, moduleData)
                 this.fetchRole()
                 this.error = null
+                return res.data
             } catch (error) {
                 this.error = handleApiError(error)
                 throw error
@@ -60,6 +62,7 @@ export const useRoleStore = defineStore('role', {
                 const res = await api.delete(`/api/roles/${id}`)
                 this.data = this.data.filter(module => module.id !== id)
                 this.error = null
+                return res.data
             } catch (error) {
                 this.error = handleApiError(error)
                 throw error

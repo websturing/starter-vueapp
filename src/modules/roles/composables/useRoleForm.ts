@@ -1,3 +1,4 @@
+import { handleApiResponse } from "@/lib/toast"
 import { useModuleStore } from '@/modules/module/stores/module'
 import { roleCreateSchema } from '@module/roles/schemas/rolesSchema'
 import { useRoleStore } from '@module/roles/stores/roles'
@@ -6,12 +7,12 @@ import { useField, useForm } from 'vee-validate'
 import { onMounted, ref } from 'vue'
 
 export function useRoleForm(initialData: any = null) {
+
+
     const store = useRoleStore()
     const moduleStore = useModuleStore();
     const { data: parentData } = storeToRefs(store)
     const { data: permissionData } = storeToRefs(moduleStore)
-
-
     const { handleSubmit, errors, isSubmitting, resetForm: veeResetForm, setValues } = useForm<{
         name: string,
         guard_name: string,
@@ -47,10 +48,11 @@ export function useRoleForm(initialData: any = null) {
             }
 
             if (isEdit.value) {
-                console.log('INI EDIT')
-                await store.updateRole(initialData.id, moduleData)
+                const res = await store.updateRole(initialData.id, moduleData)
+                handleApiResponse(res);
             } else {
-                await store.createRole(moduleData)
+                const res = await store.createRole(moduleData)
+                handleApiResponse(res);
                 resetForm()
             }
         } catch (error) {

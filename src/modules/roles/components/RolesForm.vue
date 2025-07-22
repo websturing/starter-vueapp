@@ -1,6 +1,6 @@
 <template>
     <div class="p-4">
-        <form @submit.prevent="onSubmit">
+        <form @submit.prevent="handleSubmit">
             <div class="d-flex flex-column gap-1 mb-3">
                 <FloatLabel variant="on">
                     <InputText id="module_name" size="medium" :class="{ 'p-invalid': errors?.name }"
@@ -31,8 +31,6 @@
                         </template>
                     </tbody>
                 </table>
-                <pre>{{
-                    permissionCheckBox }}</pre>
             </div>
             <div class="d-flex justify-end gap-2 mt-4">
                 <Button type="button" label="Reset" variant="text" severity="danger" @click="resetForm" />
@@ -51,9 +49,18 @@ const props = defineProps<{
         id?: number
         name: string
         guard_name: string
+        permissions?: Array<number>
     }
 }>()
 
+const emit = defineEmits(['submitted'])
+
+// Wrap submit dan emit di komponen Vue ini
+const handleSubmit = async () => {
+  await onSubmit()
+    emit('submitted')
+
+}
 
 // Composable: create/edit tergantung props
 const {
@@ -64,6 +71,6 @@ const {
     onSubmit,
     isEdit,
     resetForm,
-    permissionData
+    permissionData,
 } = useRoleForm(props.initialData)
 </script>

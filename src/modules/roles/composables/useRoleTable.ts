@@ -1,4 +1,5 @@
 import { useRoleStore } from '@/modules/roles/stores/roles'
+import { push } from 'notivue'
 import { computed, ref, watch } from 'vue'
 
 export function useRoleTable() {
@@ -34,7 +35,8 @@ export function useRoleTable() {
         alert(`Edit Module: ${row.name}`)
     }
     const onRowDelete = async (row: any) => {
-        await store.deleteRole(row.id)
+        const res = await store.deleteRole(row.id)
+        push.success(`${res.message}`)
     }
 
     watch(searchRef, async () => {

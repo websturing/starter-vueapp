@@ -29,3 +29,20 @@ export const showWarning = (message: string) => {
         duration: 5000,
     })
 }
+
+// utils/notify.ts
+
+
+
+export function handleApiResponse(response: any) {
+    if (response?.status == true) {
+        push.success({
+            message: response.message || 'Operation succeeded',
+        })
+    } else {
+        push.error({
+            message: response.message || 'Something went wrong',
+        })
+    }
+}
+
