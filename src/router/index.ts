@@ -51,7 +51,7 @@ const routes = [
       {
         path: 'users',
         name: 'users',
-        component: () => import('@/views/admin/UsersView.vue'),
+        component: () => import('@module/user/views/UserView.vue'),
         meta: { permission: 'dashboard.read' },
       },
 
