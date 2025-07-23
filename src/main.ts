@@ -27,6 +27,7 @@ import InputGroupAddon from 'primevue/inputgroupaddon';
 import InputIcon from 'primevue/inputicon';
 import InputText from 'primevue/inputtext';
 import Select from 'primevue/select';
+import Tag from 'primevue/tag';
 import Toast from 'primevue/toast';
 import ToggleButton from 'primevue/togglebutton';
 import Tooltip from 'primevue/tooltip';
@@ -76,6 +77,7 @@ app.component('CheckboxGroup', CheckboxGroup)
 app.component('ConfirmPopup', ConfirmPopup)
 app.component('Toast', Toast)
 app.directive('tooltip', Tooltip);
+app.component('tag', Tag);
 app.use(ConfirmationService)
 app.use(router)
 app.use(notivue)
