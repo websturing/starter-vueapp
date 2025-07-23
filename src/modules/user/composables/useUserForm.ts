@@ -1,3 +1,4 @@
+import { handleApiResponse } from "@/lib/toast"
 import { useRoleStore } from '@/modules/roles/stores/roles'
 import { useUserStore } from '@/modules/user/stores/user'
 import { userSchema } from '@module/user/schemas/userSchema'
@@ -15,19 +16,19 @@ export function useUserForm(initialData: any = null) {
     const { handleSubmit, errors, isSubmitting, resetForm: veeResetForm, setValues } = useForm<{
         name: string
         email: string,
-        role_name: Array<string>
+        role_names: Array<string>
     }>({
         validationSchema: userSchema,
         initialValues: {
             name: initialData?.name || '',
             email: initialData?.email || '',
-            role_name: initialData?.role_name || []
+            role_names: initialData?.role_names || []
         }
     })
 
     const { value: name } = useField<string>('name')
     const { value: email } = useField<string>('email')
-    const { value: role_name } = useField<Array<string>>('role_name')
+    const { value: role_names } = useField<Array<string>>('role_names')
 
     const isEdit = ref(!!initialData?.id) // true kalau edit
 
@@ -37,7 +38,7 @@ export function useUserForm(initialData: any = null) {
             values: {
                 name: '',
                 email: '',
-                role_name: []
+                role_names: []
             },
             errors: {}
         })
@@ -48,14 +49,15 @@ export function useUserForm(initialData: any = null) {
             const moduleData = {
                 name: values.name,
                 email: values.email,
-                role_name: values.role_name
+                role_names: values.role_names
             }
 
             if (isEdit.value) {
-                console.log('INI EDIT')
-                await store.updateRole(initialData.id, moduleData)
+                const res = await store.updateUser(initialData.id, moduleData)
+                handleApiResponse(res);
             } else {
-                await store.createRole(moduleData)
+                const res = await store.createUser(moduleData)
+                handleApiResponse(res);
                 resetForm()
             }
         } catch (error) {
@@ -76,7 +78,7 @@ export function useUserForm(initialData: any = null) {
     return {
         name,
         email,
-        role_name,
+        role_names,
         isEdit,
         roleData,
         onSubmit,

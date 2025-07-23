@@ -24,12 +24,12 @@ export const useUserStore = defineStore('users', {
                 this.loading = false
             }
         },
-        async createRole(moduleData: any) {
+        async createUser(moduleData: any) {
             this.loading = true;
             this.error = null;
             try {
-                const res = await api.post('/api/roles', moduleData)
-                this.data.push(res.data.data)
+                const res = await api.post('/api/users', moduleData)
+                this.fetchUserWithRoles()
                 this.data = this.data.sort((a, b) => a.name.localeCompare(b.name))
                 this.error = null
                 return res.data
@@ -40,11 +40,11 @@ export const useUserStore = defineStore('users', {
                 this.loading = false
             }
         },
-        async updateRole(id: number, moduleData: any) {
+        async updateUser(id: number, moduleData: any) {
             this.loading = true;
             this.error = null;
             try {
-                const res = await api.post(`/api/roles/${id}`, moduleData)
+                const res = await api.post(`/api/users/${id}`, moduleData)
                 this.fetchUserWithRoles()
                 this.error = null
                 return res.data
@@ -55,11 +55,11 @@ export const useUserStore = defineStore('users', {
                 this.loading = false
             }
         },
-        async deleteRole(id: number) {
+        async deleteUser(id: number) {
             this.loading = true;
             this.error = null;
             try {
-                const res = await api.delete(`/api/roles/${id}`)
+                const res = await api.delete(`/api/users/${id}`)
                 this.data = this.data.filter(module => module.id !== id)
                 this.error = null
                 return res.data

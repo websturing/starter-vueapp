@@ -1,6 +1,6 @@
 <template>
     <div class="p-4">
-        <form @submit.prevent="onSubmit">
+        <form @submit.prevent="handleSubmit">
             <div class="d-flex flex-column gap-1 mb-3">
                 <FloatLabel variant="on">
                     <InputText id="module_name" size="medium" :class="{ 'p-invalid': errors?.name }" v-model="name"
@@ -16,8 +16,8 @@
                     <label for="slug_name">Email</label>
                 </FloatLabel>
                 <FloatLabel variant="on" class="flex-grow-1">
-                    <MultiSelect filter class="w-100" id="on_roles" :class="{ 'p-invalid': errors?.role_name }"
-                        v-model="role_name" :options="roleData" optionLabel="name" optionValue="name"
+                    <MultiSelect filter class="w-100" id="on_roles" :class="{ 'p-invalid': errors?.role_names }"
+                        v-model="role_names" :options="roleData" optionLabel="name" optionValue="name"
                         placeholder="Select parent module" />
                     <label for="on_roles">On Label</label>
                 </FloatLabel>
@@ -29,12 +29,6 @@
                 <Button type="submit" icon="icon icon-save-for-later-2"
                     :label="isEdit ? 'Apply Changes' : 'Create New'" />
             </div>
-            <pre>
-                name : {{ name }}
-                email : {{ email }}
-                role : {{ role_name }}
-                erros : {{ errors }}
-            </pre>
         </form>
     </div>
 </template>
@@ -48,15 +42,25 @@ const props = defineProps<{
         id?: number
         name: string
         email: string,
-        role_name: Array<string>
+        role_names: Array<string>
     }
 }>()
+
+const emit = defineEmits(['submitted'])
+
+// Wrap submit dan emit di komponen Vue ini
+const handleSubmit = async () => {
+    await onSubmit()
+    emit('submitted')
+
+}
+
 
 // Composable: create/edit tergantung props
 const {
     name,
     email,
-    role_name,
+    role_names,
     roleData,
     errors,
     onSubmit,

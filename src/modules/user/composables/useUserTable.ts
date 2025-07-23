@@ -35,7 +35,7 @@ export function useUserTable() {
         alert(`Edit Module: ${row.name}`)
     }
     const onRowDelete = async (row: any) => {
-        const res = await store.deleteRole(row.id)
+        const res = await store.deleteUser(row.id)
         push.success(`${res.message}`)
     }
 
