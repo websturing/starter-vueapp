@@ -5,6 +5,7 @@
                 <div class="card">
                     <div class="card-body">
                         <user-table></user-table>
+                        <user-view></user-view>
 
                     </div>
                 </div>
@@ -14,6 +15,7 @@
     </div>
 </template>
 <script setup lang="ts">
+import userView from "@module/user/components/UserForm.vue";
 import userTable from "@module/user/components/UserTable.vue";
 
 </script>
