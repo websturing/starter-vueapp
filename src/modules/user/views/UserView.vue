@@ -20,8 +20,19 @@
 <script setup lang="ts">
 import userView from "@module/user/components/UserForm.vue";
 import userTable from "@module/user/components/UserTable.vue";
-
+import { useHead } from '@vueuse/head';
 import { ref } from 'vue';
+
+
+useHead(() => ({
+    title: "User Management System",
+    meta: [
+        {
+            name: "Manage, track, and control all user accounts and permissions in one place",
+        }
+    ]
+}))
+
 
 const initialData = ref<any | null>(null)
 const showForm = ref(false)

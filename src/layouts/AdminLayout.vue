@@ -55,8 +55,46 @@
                             <span class="nav-link-text ms-1">Users</span>
                         </a>
                     </li>
+                    <template v-for="item in permissions || []" :key="item.id">
+                        <li class="nav-item" v-if="item.children.length == 0">
+                            <a :class="['nav-link', routeModules?.module === capitalize(item.slug) ? 'active' : '']"
+                                :href="$router.resolve({ name: item.slug }).href"
+                                @click.prevent="$router.push({ name: item.slug })">
+                                <div
+                                    class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                                    <i class="icon icon-home-2 text-dark text-sm opacity-10"></i>
+                                </div>
+                                <span class="nav-link-text ms-1">{{ routeModules?.module }}</span>
+                            </a>
+                        </li>
+                    </template>
+                    <template v-for="item in permissions || []" :key="item.id">
+                        <!-- Header Item (hanya tampil jika punya children) -->
+                        <li class="nav-item" v-if="item?.name && Array.isArray(item.children) && item.children.length">
+                            <h6 class="ps-4 ms-2 text-sm opacity-6">
+                                {{ item.name }}
+                            </h6>
+                        </li>
+
+                        <!-- Children Items -->
+                        <template v-if="Array.isArray(item?.children) && item.children.length">
+                            <li class="nav-item" v-for="child in item.children || []" :key="child.id">
+                                <a :class="['nav-link', routeModules?.module === capitalize(child?.slug) ? 'active' : '']"
+                                    @click.prevent="child?.slug && $router.push({ name: child.slug })">
+                                    <div
+                                        class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                                        <i class="icon icon-profile text-dark text-sm opacity-10"></i>
+                                    </div>
+                                    <span class="nav-link-text ms-1">
+                                        {{ child?.name || 'Unnamed' }} <!-- Fallback text -->
+                                    </span>
+                                </a>
+                            </li>
+                        </template>
+                    </template>
                 </ul>
             </div>
+            <pre>{{ permissions }}</pre>
             <div class="sidenav-footer mx-3 ">
                 <a href="https://www.creative-tim.com/learning-lab/bootstrap/license/argon-dashboard" target="_blank"
                     class="btn btn-dark btn-sm w-100 mb-3">Documentation</a>
@@ -71,7 +109,8 @@
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
                             <li class="breadcrumb-item text-sm"><a class="opacity-5 text-white"
-                                    href="javascript:;">Pages</a></li>
+                                    href="javascript:;">Pages</a>
+                            </li>
                             <li class="breadcrumb-item text-sm text-white active" aria-current="page">{{
                                 routeModules?.module }}
                             </li>
@@ -203,13 +242,18 @@
 </template>
 
 <script setup lang="ts">
+import { useAdminMenu } from '@/composables/useAdminMenu';
 import { getModulesFromRoute } from '@/lib/routeParser';
+import { useApplicationStore } from '@/stores/application';
 import { useAuthStore } from '@/stores/auth';
 import { push } from 'notivue';
 import { ConfirmDialog } from 'primevue';
 import { useConfirm } from "primevue/useconfirm";
-import { computed } from 'vue';
+import { computed, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
+
+const appStore = useApplicationStore();
+
 const authStore = useAuthStore();
 const confirm = useConfirm();
 const route = useRoute();
@@ -257,5 +301,17 @@ const confirm1 = () => {
     });
 };
 
+onMounted(() => {
+    appStore.fetchAppMeta()
+})
+
+const {
+    permissions
+} = useAdminMenu()
+
+function capitalize(str: string) {
+    if (!str) return ''
+    return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase()
+}
 
 </script>
