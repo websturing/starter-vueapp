@@ -53,6 +53,12 @@ const routes = [
         component: () => import('@module/user/views/UserView.vue'),
         meta: { permission: 'users.read' },
       },
+      {
+        path: 'shift',
+        name: 'shift',
+        component: () => import('@module/shift/views/ShiftView.vue'),
+        meta: { permission: 'shift.read' },
+      },
 
     ]
   },
