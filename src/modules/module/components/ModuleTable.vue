@@ -23,6 +23,8 @@ const columns = [
     { field: 'no', header: 'No' },
     { field: 'name', header: 'Module Name' },
     { field: 'slug', header: 'Slug' },
+    { field: 'icon', header: 'icon' },
+    { field: 'order', header: 'order' },
     { field: 'parent', header: 'parent' },
     { field: 'actions', header: 'actions' },
 ]

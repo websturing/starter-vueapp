@@ -85,6 +85,11 @@ const requireConfirmation = (e: Event, data: any) => {
                         </div>
                     </template>
                 </Column>
+                <Column v-else-if="col.field === 'icon'" :header="col.header">
+                    <template #body="slotProps">
+                        <i :class="['icon', slotProps.data.icon]"></i>
+                    </template>
+                </Column>
 
                 <Column v-else :field="col.field" :header="col.header" />
             </template>

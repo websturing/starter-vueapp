@@ -13,16 +13,26 @@ export function useModuleForm(initialData: any = null) {
     const { handleSubmit, errors, isSubmitting, resetForm: veeResetForm, setValues } = useForm<{
         name: string
         slug: string
+        icon: string
+        order: number
+        is_active: boolean
+
     }>({
         validationSchema: permissionModuleCreateSchema,
         initialValues: {
             name: initialData?.name || '',
-            slug: initialData?.slug || ''
+            slug: initialData?.slug || '',
+            icon: initialData?.icon || '',
+            order: initialData?.order || '',
+            is_active: initialData?.is_active || true
         }
     })
 
     const { value: name } = useField<string>('name')
     const { value: slug } = useField<string>('slug')
+    const { value: icon } = useField<string>('icon')
+    const { value: order } = useField<number>('order')
+    const { value: is_active } = useField<boolean>('is_active')
 
     const isParent = ref(initialData?.parent_id == null ? false : true) // true jika tidak ada parent_id
     const isEdit = ref(!!initialData?.id) // true kalau edit
@@ -35,7 +45,9 @@ export function useModuleForm(initialData: any = null) {
         veeResetForm({
             values: {
                 name: '',
-                slug: ''
+                slug: '',
+                icon: '',
+                is_active: true
             },
             errors: {}
         })
@@ -48,6 +60,9 @@ export function useModuleForm(initialData: any = null) {
             const moduleData = {
                 name: values.name,
                 slug: values.slug,
+                icon: values.icon,
+                order: values.order,
+                is_active: values.is_active,
                 parent_id: parentId.value
             }
 
@@ -80,6 +95,9 @@ export function useModuleForm(initialData: any = null) {
     return {
         name,
         slug,
+        icon,
+        order,
+        is_active,
         parentId,
         isParent,
         isEdit,

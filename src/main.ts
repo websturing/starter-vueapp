@@ -25,12 +25,14 @@ import IconField from 'primevue/iconfield';
 import InputGroup from 'primevue/inputgroup';
 import InputGroupAddon from 'primevue/inputgroupaddon';
 import InputIcon from 'primevue/inputicon';
+import InputNumber from 'primevue/inputnumber';
 import InputText from 'primevue/inputtext';
 import MultiSelect from 'primevue/multiselect';
 import Select from 'primevue/select';
 import Tag from 'primevue/tag';
 import Toast from 'primevue/toast';
 import ToggleButton from 'primevue/togglebutton';
+import ToggleSwitch from 'primevue/toggleswitch';
 import Tooltip from 'primevue/tooltip';
 
 
@@ -79,6 +81,8 @@ app.component('ConfirmPopup', ConfirmPopup)
 app.component('Toast', Toast)
 app.component('MultiSelect', MultiSelect)
 app.component('tag', Tag);
+app.component('ToggleSwitch', ToggleSwitch);
+app.component('InputNumber', InputNumber);
 app.directive('tooltip', Tooltip);
 app.use(ConfirmationService)
 app.use(router)

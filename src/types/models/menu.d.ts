@@ -8,6 +8,7 @@ export interface Menu {
     id: number;
     name: string;
     slug: string;
+    icon: string;
     permissions: MenuItem[];
     children: Menu[];
 

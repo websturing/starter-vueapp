@@ -9,16 +9,30 @@
                 </FloatLabel>
             </div>
 
-            <div class="d-flex gap-2 mb-4">
+            <div class="d-flex gap-2 mb-4 align-items-center">
                 <FloatLabel variant="on">
                     <InputText id="slug_name" size="medium" :class="{ 'p-invalid': errors?.slug }" v-model="slugName"
                         class="w-100" />
                     <label for="slug_name">Slug Name</label>
                 </FloatLabel>
 
+                <FloatLabel variant="on">
+                    <InputText id="icon" size="medium" :class="{ 'p-invalid': errors?.icon }" v-model="icon"
+                        class="w-100" />
+                    <label for="icon">icon</label>
+                </FloatLabel>
+
+                <FloatLabel variant="on">
+                    <InputNumber id="order" size="medium" :class="{ 'p-invalid': errors?.order }" v-model="order" />
+                    <label for="order">order</label>
+                </FloatLabel>
+
+                <ToggleSwitch id="is_active" v-model="is_active"></ToggleSwitch>
+                <label for="is_active">Module Active ?</label>
+            </div>
+            <div class="d-flex gap-2 mb-4">
                 <ToggleButton v-model="isParent" class="w-24" onLabel="Select Parent" offLabel="Has Parent?"
                     size="small" />
-
                 <Select v-if="isParent" size="medium" v-model="parentId" :options="parentData" optionLabel="name"
                     optionValue="id" placeholder="Select parent module" />
             </div>
@@ -42,6 +56,9 @@ const props = defineProps<{
         name: string
         slug: string
         parent_id?: number | null
+        icon: string
+        order: number
+        is_active: boolean
     }
 }>()
 
@@ -49,6 +66,9 @@ const props = defineProps<{
 const {
     name: moduleName,
     slug: slugName,
+    icon,
+    order,
+    is_active,
     isParent,
     parentId,
     parentData,
