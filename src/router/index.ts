@@ -34,7 +34,6 @@ const routes = [
     redirect: {
       name: 'dashboard'
     },
-    meta: { permission: 'view.dashboard' },
     children: [
       {
         path: 'dashboard',
@@ -46,13 +45,13 @@ const routes = [
         path: 'permissions',
         name: 'permissions',
         component: () => import('@/views/admin/PermissionsView.vue'),
-        meta: { permission: 'dashboard.read' },
+        meta: { permission: 'permissions.read' },
       },
       {
         path: 'users',
         name: 'users',
         component: () => import('@module/user/views/UserView.vue'),
-        meta: { permission: 'dashboard.read' },
+        meta: { permission: 'users.read' },
       },
 
     ]
@@ -94,34 +93,22 @@ function getCookie(name: string): string | null {
 router.beforeEach(async (to) => {
   const auth = useAuthStore();
 
-  // Route yang boleh diakses tanpa auth
   const publicRoutes = ['/login'];
   if (publicRoutes.includes(to.path)) return true;
 
   try {
     const token = getCookie('XSRF-TOKEN');
+    if (!token) return '/login';
 
-    // Jika tidak ada token, arahkan ke login
-    if (!token) {
-      if (to.path !== '/login') {
-        return '/login';
-      }
-      return true;
-    }
-
-    // Jika ada token tapi user belum loaded
+    // Kalau belum login, fetch user
     if (!auth.user) {
+      console.log('🔄 Fetching user...');
       await auth.fetchUser();
-
-      // Jika fetch user gagal (misal token expired)
-      if (!auth.user) {
-        document.cookie = 'XSRF-TOKEN=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-        return '/login';
-      }
     }
 
-    // Cek permission
-    if (to.meta.permission && !auth.hasPermission(to.meta.permission)) {
+    const requiredPermission = to.meta.permission;
+    if (requiredPermission && !auth.hasPermission(requiredPermission)) {
+      console.warn('🚫 No permission:', requiredPermission);
       return '/unauthorized';
     }
 
@@ -132,6 +119,7 @@ router.beforeEach(async (to) => {
     return '/login';
   }
 });
+
 
 
 export default router

@@ -17,8 +17,9 @@
             </div>
             <hr class="horizontal dark mt-0">
             <div class="collapse navbar-collapse  w-auto " id="sidenav-collapse-main">
+
                 <ul class="navbar-nav">
-                    <template v-for="item in permissions || []" :key="item.id">
+                    <template v-for="item in menu || []" :key="item.id">
                         <li class="nav-item" v-if="item.children.length == 0">
                             <a :class="['nav-link', routeModules?.module === capitalize(item.slug) ? 'active' : '']"
                                 :href="$router.resolve({ name: item.slug }).href"
@@ -31,7 +32,7 @@
                             </a>
                         </li>
                     </template>
-                    <template v-for="item in permissions || []" :key="item.id">
+                    <template v-for="item in menu || []" :key="item.id">
                         <!-- Header Item (hanya tampil jika punya children) -->
                         <li class="nav-item" v-if="item?.name && Array.isArray(item.children) && item.children.length">
                             <h6 class="ps-4 ms-2 text-sm opacity-6">
@@ -184,7 +185,7 @@ onMounted(() => {
 })
 
 const {
-    permissions
+    menu
 } = useAdminMenu()
 
 function capitalize(str: string) {

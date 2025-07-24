@@ -4,9 +4,9 @@ import { storeToRefs } from "pinia";
 export function useAdminMenu(initialData: any = null) {
     const store = useAuthStore()
 
-    const { permissions } = storeToRefs(store)
+    const { menu } = storeToRefs(store)
 
     return {
-        permissions
+        menu
     }
 }

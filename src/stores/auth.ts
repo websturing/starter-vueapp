@@ -16,23 +16,18 @@ export const useAuthStore = defineStore('auth', {
   state: () => ({
     user: null as User | null,
     role: [] as string[],
-    permissions: null as Menu[] | null,
+    permissions: [] as string[],
+    menu: null as Menu[] | null,
     email: null as string | null,
     password: null as string | null,
   }),
 
   getters: {
     flattenedPermissions: (state) => {
-      if (!state.permissions) {
-        return [];
-      }
-      const result = state.permissions.flatMap((menu: Menu) => {
-        // Gunakan menu.permissions bukan menu.permission
-        return menu.permissions?.map(item => item.permission_name) || [];
-      });
-
-      return result;
+      return state.permissions || [];
     }
+
+
   },
 
   actions: {
@@ -67,7 +62,8 @@ export const useAuthStore = defineStore('auth', {
         this.user = res.data.data.user
         this.role = res.data.data.role || []
         this.permissions = res.data.data.permissions || []
-
+        this.menu = res.data.data.menu || []
+        console.log(this.permissions)
         localStorage.setItem('lastUserFetch', Date.now().toString())
       } catch (error) {
         this.clearAuth()
@@ -77,7 +73,7 @@ export const useAuthStore = defineStore('auth', {
 
     clearAuth() {
       this.user = null
-      this.permissions = null
+      this.permissions = []
       localStorage.removeItem('lastUserFetch')
     },
 
@@ -88,7 +84,7 @@ export const useAuthStore = defineStore('auth', {
       } finally {
         // Bersihkan semua state
         this.user = null;
-        this.permissions = null;
+        this.permissions = [];
         this.role = [];
 
         // Hapus cookie
@@ -100,18 +96,21 @@ export const useAuthStore = defineStore('auth', {
     hasPermission(perm: string | string[]): boolean {
       try {
         if (!this.flattenedPermissions.length) {
-          return false
+          return false;
         }
 
-        const permsToCheck = Array.isArray(perm) ? perm : [perm]
-        const result = permsToCheck.every(p => this.flattenedPermissions.includes(p))
+        const permsToCheck = Array.isArray(perm) ? perm : [perm];
+        const result = permsToCheck.every(p => this.flattenedPermissions.includes(p));
 
-
-        return result
+        return result;
       } catch (error) {
-        console.error('Permission check error:', error)
-        return false
+        console.error('Permission check error:', error);
+        return false;
       }
     }
+
+
+
+
   },
 })

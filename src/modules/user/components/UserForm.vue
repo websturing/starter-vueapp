@@ -18,8 +18,8 @@
                 <FloatLabel variant="on" class="flex-grow-1">
                     <MultiSelect filter class="w-100" id="on_roles" :class="{ 'p-invalid': errors?.role_names }"
                         v-model="role_names" :options="roleData" optionLabel="name" optionValue="name"
-                        placeholder="Select parent module" />
-                    <label for="on_roles">On Label</label>
+                        placeholder="Select Roles" />
+                    <label for="on_roles">Select Roles</label>
                 </FloatLabel>
             </div>
 
