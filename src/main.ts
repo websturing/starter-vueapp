@@ -19,6 +19,7 @@ import PrimeVue from 'primevue/config';
 import ConfirmationService from 'primevue/confirmationservice';
 import ConfirmPopup from 'primevue/confirmpopup';
 import DataTable from 'primevue/datatable';
+import DatePicker from 'primevue/datepicker';
 import Dialog from 'primevue/dialog';
 import FloatLabel from 'primevue/floatlabel';
 import IconField from 'primevue/iconfield';
@@ -27,6 +28,7 @@ import InputGroupAddon from 'primevue/inputgroupaddon';
 import InputIcon from 'primevue/inputicon';
 import InputNumber from 'primevue/inputnumber';
 import InputText from 'primevue/inputtext';
+import Message from 'primevue/message';
 import MultiSelect from 'primevue/multiselect';
 import Select from 'primevue/select';
 import Tag from 'primevue/tag';
@@ -34,6 +36,8 @@ import Toast from 'primevue/toast';
 import ToggleButton from 'primevue/togglebutton';
 import ToggleSwitch from 'primevue/toggleswitch';
 import Tooltip from 'primevue/tooltip';
+
+
 
 
 
@@ -83,6 +87,8 @@ app.component('MultiSelect', MultiSelect)
 app.component('tag', Tag);
 app.component('ToggleSwitch', ToggleSwitch);
 app.component('InputNumber', InputNumber);
+app.component('DatePicker', DatePicker);
+app.component('Message', Message);
 app.directive('tooltip', Tooltip);
 app.use(ConfirmationService)
 app.use(router)
