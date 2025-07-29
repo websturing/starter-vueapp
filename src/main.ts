@@ -31,11 +31,13 @@ import InputText from 'primevue/inputtext';
 import Message from 'primevue/message';
 import MultiSelect from 'primevue/multiselect';
 import Select from 'primevue/select';
+import SelectButton from 'primevue/selectbutton';
 import Tag from 'primevue/tag';
 import Toast from 'primevue/toast';
 import ToggleButton from 'primevue/togglebutton';
 import ToggleSwitch from 'primevue/toggleswitch';
 import Tooltip from 'primevue/tooltip';
+
 
 
 
@@ -89,6 +91,7 @@ app.component('ToggleSwitch', ToggleSwitch);
 app.component('InputNumber', InputNumber);
 app.component('DatePicker', DatePicker);
 app.component('Message', Message);
+app.component('SelectButton', SelectButton);
 app.directive('tooltip', Tooltip);
 app.use(ConfirmationService)
 app.use(router)

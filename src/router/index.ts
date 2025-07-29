@@ -59,6 +59,12 @@ const routes = [
         component: () => import('@module/shift/views/ShiftView.vue'),
         meta: { permission: 'shift.read' },
       },
+      {
+        path: 'employee',
+        name: 'employee',
+        component: () => import('@module/employee/views/EmployeeView.vue'),
+        meta: { permission: 'employee.read' },
+      },
 
     ]
   },
