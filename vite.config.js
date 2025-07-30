@@ -20,7 +20,7 @@ export default defineConfig({
 
     hmr: {
       protocol: 'wss',
-      host: 'vue.starter.localhost',
+      host: 'attendify.localhost',
       clientPort: 443, // 🟢 ini penting
     },
 

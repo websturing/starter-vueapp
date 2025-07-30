@@ -21,6 +21,8 @@ export const useAuthStore = defineStore('auth', {
     menu: null as Menu[] | null,
     email: null as string | null,
     password: null as string | null,
+    isLoggedIn: false as boolean
+
   }),
 
   getters: {
@@ -35,22 +37,25 @@ export const useAuthStore = defineStore('auth', {
     async getCsrfToken() {
       await api.get('/sanctum/csrf-cookie')
     },
+    async login({ email, password }: { email: string; password: string }) {
+      try {
+        const res = await api.post('/api/auth/login', { email, password })
+        console.log(res)
+        const token = res.data.data.accessToken
+        // Simpan token di localStorage (atau Pinia)
+        localStorage.setItem('access_token', token)
 
-    async login({ email, password }: { email: string, password: string }) {
-      this.email = email
-      this.password = password
-      return this.getCsrfToken()
-        .then(() => new Promise((r) => setTimeout(r, 100)))
-        .then(() =>
-          api.post('/api/auth/login', {
-            email: this.email,
-            password: this.password
-          })
-        )
-        .then(async (res) => {
-          await this.fetchUser()
-          return res
-        })
+        // Auto-inject Authorization header untuk axios
+        api.defaults.headers.common['Authorization'] = `Bearer ${token}`
+
+        // Simpan user (opsional)
+        this.fetchUser()
+        this.isLoggedIn = true
+
+        return res
+      } catch (err) {
+        throw err
+      }
     },
 
     async fetchUser() {
