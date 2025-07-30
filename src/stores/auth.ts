@@ -45,10 +45,6 @@ export const useAuthStore = defineStore('auth', {
           api.post('/api/auth/login', {
             email: this.email,
             password: this.password
-          }, {
-            headers: {
-              'X-XSRF-TOKEN': decodeURIComponent(token || ''),
-            }
           })
         )
         .then(async (res) => {
