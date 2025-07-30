@@ -8,12 +8,12 @@ export const useApplicationStore = defineStore('application', {
 
   actions: {
     async fetchAppMeta() {
-     try {
-    const response = await api.get('/api/application/meta')
-    this.meta = response.data
-  } catch (error) {
-    console.error('Failed to fetch app meta:', error)
-  }
+      try {
+        const response = await api.get('/api/application/meta')
+        this.meta = response.data
+      } catch (error) {
+        console.error('Failed to fetch app meta:', error)
+      }
     },
   },
 })

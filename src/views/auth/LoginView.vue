@@ -103,23 +103,30 @@ import { onBeforeRouteLeave } from 'vue-router';
 const appStore = useApplicationStore();
 const authStore = useAuthStore();
 
+
 const { meta } = storeToRefs(appStore);
 const { email, password } = storeToRefs(authStore);
-
+appStore.fetchAppMeta()
 useHead(() => ({
-    title: meta.value?.app_title || 'Argon Dashboard',
+    title: meta.value?.appTitle || `kai's Projects`,
     meta: [
         {
-            name: meta.value?.app_description,
+            name: 'description',
+            content: meta.value?.appDescription || 'Default description',
         }
     ]
 }))
 
 
-onMounted(() => {
-    appStore.fetchAppMeta()
+onMounted(async () => {
+    await appStore.fetchAppMeta()
     document.body.classList.remove('bg-gray-100')
 })
+
+
+
+
+
 
 onBeforeRouteLeave(() => {
     document.body.classList.add('bg-gray-100')
