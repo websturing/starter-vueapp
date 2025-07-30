@@ -77,10 +77,10 @@ const requireConfirmation = (e: Event, data: any) => {
                         </div>
                     </template>
                 </Column>
-                <Column v-else-if="col.field === 'role_names'" :header="col.header">
+                <Column v-else-if="col.field === 'roleNames'" :header="col.header">
                     <template #body="slotProps">
                         <div class="d-flex gap-2">
-                            <Button v-for="(role, index) in slotProps.data.role_names" :key="index" :label="role"
+                            <Button v-for="(role, index) in slotProps.data.roleNames" :key="index" :label="role"
                                 severity="secondary" size="small" />
                         </div>
                     </template>

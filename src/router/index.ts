@@ -65,6 +65,12 @@ const routes = [
         component: () => import('@module/employee/views/EmployeeView.vue'),
         meta: { permission: 'employee.read' },
       },
+      {
+        path: 'assignments',
+        name: 'assignments',
+        component: () => import('@module/shift-user-assignment/views/ShiftUserAssignmentView.vue'),
+        meta: { permission: 'employee.read' },
+      },
 
     ]
   },

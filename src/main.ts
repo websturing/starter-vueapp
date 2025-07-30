@@ -12,6 +12,7 @@ import '@assets/js/argon-dashboard.min.js?v=2.1.0';
 import Aura from '@primevue/themes/aura';
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate';
 import Button from 'primevue/button';
+import Card from 'primevue/card';
 import Checkbox from 'primevue/checkbox';
 import CheckboxGroup from 'primevue/checkboxgroup';
 import Column from 'primevue/column';
@@ -37,6 +38,9 @@ import Toast from 'primevue/toast';
 import ToggleButton from 'primevue/togglebutton';
 import ToggleSwitch from 'primevue/toggleswitch';
 import Tooltip from 'primevue/tooltip';
+
+import Panel from 'primevue/panel';
+
 
 
 
@@ -92,6 +96,8 @@ app.component('InputNumber', InputNumber);
 app.component('DatePicker', DatePicker);
 app.component('Message', Message);
 app.component('SelectButton', SelectButton);
+app.component('Card', Card);
+app.component('Panel', Panel);
 app.directive('tooltip', Tooltip);
 app.use(ConfirmationService)
 app.use(router)

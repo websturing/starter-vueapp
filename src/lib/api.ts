@@ -4,7 +4,7 @@ import axiosCaseConverter from 'axios-case-converter'
 // Buat instance axios dengan case converter
 const api = axiosCaseConverter(
   axios.create({
-    baseURL: 'https://api.starter.localhost',
+    baseURL: import.meta.env.VITE_API_BASE_URL,
     withCredentials: true,
   }),
   {

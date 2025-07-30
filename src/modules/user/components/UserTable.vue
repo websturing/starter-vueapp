@@ -23,7 +23,7 @@ const columns = [
     { field: 'no', header: 'No' },
     { field: 'name', header: 'Name' },
     { field: 'email', header: 'Email' },
-    { field: 'role_names', header: 'Role' },
+    { field: 'roleNames', header: 'Role' },
     { field: 'actions', header: 'action' },
 ]
 

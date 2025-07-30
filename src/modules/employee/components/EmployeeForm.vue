@@ -26,7 +26,6 @@
                 <ToggleSwitch id="isActive" v-model="active"></ToggleSwitch>
                 <label for="isActive">Active</label>
             </div>
-            <pre>{{ errors }}</pre>
             <form-card-error v-if="Object.keys(errors).length" :errors="errors"></form-card-error>
             <div class="d-flex justify-end gap-2 mt-4">
                 <Button type="button" label="Reset" variant="text" severity="danger" @click="resetForm" />
