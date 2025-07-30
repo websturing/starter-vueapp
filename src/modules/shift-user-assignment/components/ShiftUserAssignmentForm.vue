@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="d-flex">
-            <div class="card">1</div>
+            <div class="card">FOrm</div>
         </div>
     </div>
 </template>
