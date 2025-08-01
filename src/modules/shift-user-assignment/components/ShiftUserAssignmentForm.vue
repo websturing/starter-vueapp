@@ -32,9 +32,9 @@
                     <label for="startTime-timeonly">Effective Date <sup>*</sup></label>
                 </FloatLabel>
 
-                        <SelectButton v-model="shiftSelected" :options="shiftData" optionLabel="name" />
+                        <SelectButton v-model="shiftSelected" :options="shiftData" optionLabel="name" :class="{ 'p-invalid': errors?.shiftSelected }" />
                     </div>
-                    <div class="datatable-wrapper mt-3">
+                    <div class="datatable-wrapper mt-3" :style="errors?.employeeSelectedData ? {'border':'1px solid red'} : {}">
                         <table class="table-employeeSelected">
                             <thead>
                                 <tr>
@@ -75,7 +75,7 @@
                         </table>
                     </div>
                     <!-- Erro Views -->
-                    <div class="card card-body" v-if="Object.keys(errors).length">
+                    <div class="card card-body mt-3" v-if="Object.keys(errors).length">
                         <p class="mb-2 d-flex align-items-center"><i
                                 class="icon icon-warning-sign-3 text-danger me-2"></i> Something Went
                             Wrong</p>
