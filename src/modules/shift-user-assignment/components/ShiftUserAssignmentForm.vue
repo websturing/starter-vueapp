@@ -67,7 +67,7 @@
                                 </template>
 
                                 <tr v-else>
-                                    <td colspan="7" class="text-danger text-center p-5">
+                                    <td colspan="7" class="text-danger text-center p-5" style="text-align:center !important">
                                         <i class="pi pi-filter-slash me-2"></i> No Employee Selected
                                     </td>
                                 </tr>
