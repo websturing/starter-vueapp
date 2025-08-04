@@ -20,7 +20,7 @@ export function useShiftUserAssignmentForm(initialData: any = null) {
 
     const now = new Date();
     const currentTime = formatDate(now);
-    const effectiveDateDate = ref(currentTime);
+    const effectiveDateDate =  ref<string>(currentTime);
 
     const employeeSelected = ref(null); // tidak dipakai di form, boleh dihapus kalau tidak digunakan
 

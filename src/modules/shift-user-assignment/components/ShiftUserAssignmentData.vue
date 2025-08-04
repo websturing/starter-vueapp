@@ -1,36 +1,31 @@
 <template>
-    <div>
-        <div class="row">
-            <div class="col-lg-12 mb-lg-0 mb-4">
-                <div class="card">
-                    <div class="card-body">
-                        <p>Users Assignments</p>
-                        <div class="d-flex  gap-2">
-                            <div class="flex-grow-1" v-for="shift in shiftData" :key="shift.id">
-                                <Panel toggleable>
-                                    <template #header>
-                                        <div class="d-flex flex-column align-items-start">
-                                            <h5 class="text-uppercase mb-0">{{ shift.name }}</h5>
-                                            <p class="text-muted text-sm mb-0">{{ shift.startTime }} - {{ shift.endTime
-                                                }}
-                                            </p>
-                                        </div>
-                                    </template>
-                                    <template #icons>
-                                        <Button icon="pi pi-cog" severity="secondary" rounded text />
-                                    </template>
-                                </Panel>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+  <div>
+    <div class="row">
+      <div class="col-lg-12 mb-lg-0 mb-4">
+        <div class="card">
+          <div class="card-body">
+            <p>Users Assignments</p>
+            <div class="d-flex  gap-2">
+              <div class="flex-grow-1">
+                <summary-panel></summary-panel>
+              </div>
+              <div>
+                <distribution-chart></distribution-chart>
+              </div>
             </div>
+          </div>
         </div>
+      </div>
     </div>
+  </div>
 </template>
 <script setup lang="ts">
+import DistributionChart from "@/modules/shift-user-assignment/components/ShiftUserAssignmentDistributionChart.vue";
+import SummaryPanel from "@/modules/shift-user-assignment/components/ShiftUserAssignmentSummaryPanel.vue";
 import { useShiftUserAssignment } from '@module/shift-user-assignment/composables/useShiftUserAssignmentView';
 const {
-    shiftData
+  summaryAssignment,
+  summaryAssignmentLoading,
+  fnfetchSUmmaryAssignments
 } = useShiftUserAssignment()
 </script>

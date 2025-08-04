@@ -1,19 +1,25 @@
-import { z } from 'zod'
+import { z } from 'zod';
 
-export const shiftSchema = z.object({
-    id: z.number(),
-    name: z.string(),
-    startTime: z.string().regex(/^\d{2}:\d{2}:\d{2}$/), // HH:MM:SS
-    endTime: z.string().regex(/^\d{2}:\d{2}:\d{2}$/),
-    isNightShift: z.boolean(),
-    tolerance: z.string().regex(/^\d{2}:\d{2}:\d{2}$/),
-    toleranceBreakdown: z.object({
-        value: z.number(),
-        unit: z.enum(['hour', 'minute', 'second']),
-        label: z.string(), // optional bisa pakai z.string().optional()
-    })
-})
+export const shiftUserAssignmentSummarySchema = z.object({
+    employeeCount: z.number(),
+    unassigned: z.number(),
+    assigned: z.number(),
+    assignments: z.array( // <-- Harus array karena hasilnya multiple shifts
+        z.object({
+            shiftId: z.number(),
+            shiftName: z.string(), // <-- Typo: 'shittName' -> 'shiftName'
+            startTime: z.string().regex(/^\d{2}:\d{2}:\d{2}$/),
+            endTime: z.string().regex(/^\d{2}:\d{2}:\d{2}$/),
+            userCount: z.number(),
+            users: z.array( // <-- Harus array karena tiap shift bisa multiple users
+                z.object({
+                    userId: z.number(),
+                    userName: z.string()
+                })
+            )
+        })
+    ).optional()
+});
 
-// Untuk list shift (misalnya pagination)
-export const shiftListSchema = z.array(shiftSchema)
-export type Shift = z.infer<typeof shiftSchema>
+export type ShiftUserAssignmentSummary = z.infer<typeof shiftUserAssignmentSummarySchema>;
+

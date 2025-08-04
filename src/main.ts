@@ -11,8 +11,10 @@ import '@assets/css/argon-dashboard.css?v=2.1.0';
 import '@assets/js/argon-dashboard.min.js?v=2.1.0';
 import Aura from '@primevue/themes/aura';
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate';
+import BlockUI from 'primevue/blockui';
 import Button from 'primevue/button';
 import Card from 'primevue/card';
+import Chart from 'primevue/chart';
 import Checkbox from 'primevue/checkbox';
 import CheckboxGroup from 'primevue/checkboxgroup';
 import Column from 'primevue/column';
@@ -23,6 +25,8 @@ import DataTable from 'primevue/datatable';
 import DatePicker from 'primevue/datepicker';
 import Dialog from 'primevue/dialog';
 import FloatLabel from 'primevue/floatlabel';
+import Skeleton from 'primevue/skeleton';
+
 import IconField from 'primevue/iconfield';
 import InputGroup from 'primevue/inputgroup';
 import InputGroupAddon from 'primevue/inputgroupaddon';
@@ -38,6 +42,9 @@ import Toast from 'primevue/toast';
 import ToggleButton from 'primevue/togglebutton';
 import ToggleSwitch from 'primevue/toggleswitch';
 import Tooltip from 'primevue/tooltip';
+
+import ProgressSpinner from 'primevue/progressspinner';
+
 
 import Panel from 'primevue/panel';
 
@@ -73,6 +80,7 @@ app.use(PrimeVue, {
     }
 });
 app.component('DataTable', DataTable)
+app.component('Chart', Chart)
 app.component('Column', Column)
 app.component('Paginator', Paginator)
 app.component('InputText', InputText)
@@ -90,7 +98,7 @@ app.component('CheckboxGroup', CheckboxGroup)
 app.component('ConfirmPopup', ConfirmPopup)
 app.component('Toast', Toast)
 app.component('MultiSelect', MultiSelect)
-app.component('tag', Tag);
+app.component('Tag', Tag);
 app.component('ToggleSwitch', ToggleSwitch);
 app.component('InputNumber', InputNumber);
 app.component('DatePicker', DatePicker);
@@ -98,6 +106,9 @@ app.component('Message', Message);
 app.component('SelectButton', SelectButton);
 app.component('Card', Card);
 app.component('Panel', Panel);
+app.component('ProgressSpinner', ProgressSpinner);
+app.component('BlockUI', BlockUI);
+app.component('Skeleton', Skeleton);
 app.directive('tooltip', Tooltip);
 app.use(ConfirmationService)
 app.use(router)
