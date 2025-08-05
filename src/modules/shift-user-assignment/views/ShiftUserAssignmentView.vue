@@ -1,8 +1,6 @@
 <template>
     <div class="container-fluid py-4">
-        <div class="d-flex gap-2">
             <data-view></data-view>
-        </div>
     </div>
 </template>
 <script setup lang="ts">

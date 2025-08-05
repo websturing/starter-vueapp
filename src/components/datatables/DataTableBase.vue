@@ -1,4 +1,10 @@
 <script setup lang="ts">
+import { useConfirm } from "primevue/useconfirm";
+import { computed, useSlots } from 'vue';
+
+const slots = useSlots()
+const hasActionsSlot = computed(() => !!slots['actions'])
+
 const props = withDefaults(defineProps<{
     columns: { field: string; header: string }[]
     data: any[]
@@ -23,7 +29,6 @@ const props = withDefaults(defineProps<{
         delete: 'Delete'
     })
 })
-import { useConfirm } from "primevue/useconfirm";
 const emit = defineEmits(['delete-row', 'edit-row']);
 const confirm = useConfirm();
 
@@ -67,14 +72,17 @@ const requireConfirmation = (e: Event, data: any) => {
                 </Column>
                 <Column v-else-if="col.field === 'actions'" :header="col.header">
                     <template #body="slotProps">
-                        <div class="d-flex gap-2">
-                            <Button @click="$emit('edit-row', slotProps.data)" size="small" severity="info"
-                                aria-label="edit" class="p-button-icon-only" icon="icon icon-edit-3"
-                                v-tooltip.left="actionLabels.edit" rounded />
-                            <Button @click="requireConfirmation($event, slotProps.data)" class="p-button-icon-only"
-                                size="small" severity="danger" aria-label="delete" icon="icon icon-trash-can"
-                                v-tooltip.left="actionLabels.delete" rounded />
-                        </div>
+                        <slot name="actions" v-bind="slotProps">
+                            <!-- Fallback jika slot tidak diberikan -->
+                            <div class="d-flex gap-2">
+                                <Button @click="$emit('edit-row', slotProps.data)" size="small" severity="info"
+                                    aria-label="edit" class="p-button-icon-only" icon="icon icon-edit-3"
+                                    v-tooltip.left="actionLabels.edit" rounded />
+                                <Button @click="requireConfirmation($event, slotProps.data)" class="p-button-icon-only"
+                                    size="small" severity="danger" aria-label="delete" icon="icon icon-trash-can"
+                                    v-tooltip.left="actionLabels.delete" rounded />
+                            </div>
+                        </slot>
                     </template>
                 </Column>
                 <Column v-else-if="col.field === 'roleNames'" :header="col.header">
@@ -100,6 +108,7 @@ const requireConfirmation = (e: Event, data: any) => {
                     <!-- Atau gunakan SVG/animasi CSS -->
                 </div>
             </template>
+            <slot />
         </DataTable>
     </div>
 </template>

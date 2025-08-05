@@ -1,11 +1,12 @@
 import api from '@/lib/api'
-import { shiftListSchema, type Shift } from '@/modules/shift/schemas/shiftSchema'
+import { shiftListSchema, ShiftWithAssignments, shiftWithAssignmentsListSchema, type Shift } from '@/modules/shift/schemas/shiftSchema'
 import { handleApiError } from '@/types/errorTypes'
 import { defineStore } from 'pinia'
 
 export const useShiftStore = defineStore('shift', {
     state: () => ({
         data: [] as Shift[],
+        dataAssingments: [] as ShiftWithAssignments[],
         loading: false,
         error: null as string | null,
     }),
@@ -23,6 +24,27 @@ export const useShiftStore = defineStore('shift', {
                 }
 
                 this.data = result.data
+                this.error = null
+            } catch (error) {
+                this.data = []
+                this.error = handleApiError(error)
+                throw error
+            } finally {
+                this.loading = false
+            }
+        },
+        async fetchShiftAssingments() {
+            this.loading = true
+            this.error = null
+            try {
+                const res = await api.get('/api/shift/assignments')
+
+                const result = shiftWithAssignmentsListSchema.safeParse(res.data.data)
+                if (!result.success) {
+                    throw new Error('❌ Invalid shift data from API')
+                }
+
+                this.dataAssingments = result.data
                 this.error = null
             } catch (error) {
                 this.data = []

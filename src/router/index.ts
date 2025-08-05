@@ -72,6 +72,14 @@ const routes = [
         component: () => import('@module/shift-user-assignment/views/ShiftUserAssignmentView.vue'),
         meta: { permission: 'employee.read' },
       },
+      {
+        path: 'assignments/create',
+        name: 'assignments-create',
+        component: () => import('@module/shift-user-assignment/components/ShiftUserAssignmentForm.vue'),
+        meta: {
+          requiresAuth: false,
+        },
+      }
 
     ]
   },

@@ -21,5 +21,19 @@ export const shiftUserAssignmentSummarySchema = z.object({
     ).optional()
 });
 
+export const shiftUserAssignmentSchema = z.object({
+    id: z.number(),
+    userId: z.number(),
+    shiftId: z.number(),
+    user: z.string(),
+    shift: z.string(),
+    time: z.string(),
+    dateStart: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
+    dateEnd: z.string()
+});
+
+
+export const shiftUserAssignmentListSchema = z.array(shiftUserAssignmentSchema)
 export type ShiftUserAssignmentSummary = z.infer<typeof shiftUserAssignmentSummarySchema>;
+export type ShiftUserAssignment = z.infer<typeof shiftUserAssignmentSchema>;
 

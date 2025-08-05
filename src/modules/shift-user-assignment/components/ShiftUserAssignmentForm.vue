@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="container-fluid py-4">
         <div class="card">
             <div class="card-body">
 
@@ -9,8 +9,8 @@
                 <form @submit.prevent="onSubmit">
                     <div class="d-flex gap-2 mt-3">
                         <FloatLabel variant="on">
-                            <Select id="employee" v-model="employeeSelected" @update:modelValue="fnEmployeeSelected" filter :options="employeeData"
-                                showClear optionLabel="user.name" style="width:350px">
+                            <Select id="employee" v-model="employeeSelected" @update:modelValue="fnEmployeeSelected"
+                                filter :options="employeeData" showClear optionLabel="user.name" style="width:350px">
                                 <template #option="slotProps">
                                     <div class="flex items-center">
                                         <p class="fw-bold mb-0">{{ slotProps.option.user?.name ?? 'User not associated'
@@ -26,15 +26,18 @@
                             <label for="employee">Employee <sup>*</sup></label>
                         </FloatLabel>
 
-                         <FloatLabel variant="on" style="width:150px">
-                    <DatePicker id="startTime-timeonly" v-model="effectiveDateDate"
-                        :class="{ 'p-invalid': errors?.effectiveDate }" dateFormat="dd-mm-yy" manualInput fluid />
-                    <label for="startTime-timeonly">Effective Date <sup>*</sup></label>
-                </FloatLabel>
+                        <FloatLabel variant="on" style="width:150px">
+                            <DatePicker id="startTime-timeonly" v-model="effectiveDateDate"
+                                :class="{ 'p-invalid': errors?.effectiveDate }" dateFormat="dd-mm-yy" manualInput
+                                fluid />
+                            <label for="startTime-timeonly">Effective Date <sup>*</sup></label>
+                        </FloatLabel>
 
-                        <SelectButton v-model="shiftSelected" :options="shiftData" optionLabel="name" :class="{ 'p-invalid': errors?.shiftSelected }" />
+                        <SelectButton v-model="shiftSelected" :options="shiftData" optionLabel="name"
+                            :class="{ 'p-invalid': errors?.shiftSelected }" />
                     </div>
-                    <div class="datatable-wrapper mt-3" :style="errors?.employeeSelectedData ? {'border':'1px solid red'} : {}">
+                    <div class="datatable-wrapper mt-3"
+                        :style="errors?.employeeSelectedData ? { 'border': '1px solid red' } : {}">
                         <table class="table-employeeSelected">
                             <thead>
                                 <tr>
@@ -67,7 +70,8 @@
                                 </template>
 
                                 <tr v-else>
-                                    <td colspan="7" class="text-danger text-center p-5" style="text-align:center !important">
+                                    <td colspan="7" class="text-danger text-center p-5"
+                                        style="text-align:center !important">
                                         <i class="pi pi-filter-slash me-2"></i> No Employee Selected
                                     </td>
                                 </tr>

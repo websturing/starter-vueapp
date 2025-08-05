@@ -3,6 +3,7 @@ import { handleApiResponse } from "@/lib/toast";
 import { Employee } from "@/modules/employee/schemas/employeeSchema";
 import { useEmployeeStore } from "@/modules/employee/stores/employee";
 import { useShiftStore } from "@/modules/shift/stores/shift";
+import router from "@/router";
 import { withValidation } from "@/types/withValidation";
 import type { ShiftUserAssignmentForm } from "@module/shift-user-assignment/schemas/shiftUserAssignmentFormSchema";
 import { shiftUserAssignmentFormSchema } from "@module/shift-user-assignment/schemas/shiftUserAssignmentFormSchema";
@@ -20,7 +21,7 @@ export function useShiftUserAssignmentForm(initialData: any = null) {
 
     const now = new Date();
     const currentTime = formatDate(now);
-    const effectiveDateDate =  ref<string>(currentTime);
+    const effectiveDateDate = ref<Date>(new Date(currentTime));
 
     const employeeSelected = ref(null); // tidak dipakai di form, boleh dihapus kalau tidak digunakan
 
@@ -71,7 +72,7 @@ export function useShiftUserAssignmentForm(initialData: any = null) {
 
 
     watch([effectiveDateDate], ([newDate]) => {
-        effectiveDateDate.value = currentTime;
+        effectiveDateDate.value = new Date(currentTime);
     });
 
     const resetForm = () => {
@@ -94,12 +95,14 @@ export function useShiftUserAssignmentForm(initialData: any = null) {
             const res = await storeShiftUserAssignment.createUShiftUserAssignment(values);
             handleApiResponse(res);
             resetForm();
+            router.push({ name: 'assignments' })
 
         })
     );
 
     onMounted(async () => {
         await storeEmployee.fetchEmployee();
+        await storeShift.fetchShift();
     });
 
     return {

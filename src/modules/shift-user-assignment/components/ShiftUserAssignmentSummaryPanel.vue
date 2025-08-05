@@ -1,7 +1,7 @@
 <template>
     <div>
         <div>
-            <Panel>
+            <Panel style="width:400px; height:310px">
                 <template #header>
                     <div class="d-flex flex-column align-items-start">
                         <h6 class="mb-0">
@@ -15,7 +15,7 @@
                     <Button icon="icon icon-reload" severity="secondary" @click="fnfetchSUmmaryAssignments" rounded
                         text />
                 </template>
-                <div class="text-sm mt-3">
+                <div class="text-sm">
                     <transition enter-active-class="animate__animated animate__fadeIn"
                         leave-active-class="animate__animated animate__fadeOut" mode="out-in">
                         <template v-if="summaryAssignmentLoading">
@@ -34,6 +34,8 @@
                             </div>
                         </template>
                     </transition>
+
+                       <Chart type="bar" :data="chartDataBar" :options="chartOptionsBar" />
                 </div>
             </Panel>
         </div>
@@ -45,6 +47,8 @@ import { onMounted } from 'vue';
 const {
     summaryAssignment,
     summaryAssignmentLoading,
+    chartDataBar,
+    chartOptionsBar,
     fnfetchSUmmaryAssignments
 } = useShiftUserAssignment()
 
