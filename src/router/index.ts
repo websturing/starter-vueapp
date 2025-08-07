@@ -79,6 +79,14 @@ const routes = [
         meta: {
           requiresAuth: false,
         },
+      },
+      {
+        path: 'attendance',
+        name: 'attendance',
+        component: () => import('@module/attendance/views/AttendanceView.vue'),
+        meta: {
+          meta: { permission: 'attendance.read' },
+        },
       }
 
     ]

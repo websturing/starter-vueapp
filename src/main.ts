@@ -11,6 +11,9 @@ import '@assets/css/argon-dashboard.css?v=2.1.0';
 import '@assets/js/argon-dashboard.min.js?v=2.1.0';
 import Aura from '@primevue/themes/aura';
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate';
+
+import Divider from 'primevue/divider';
+
 import BlockUI from 'primevue/blockui';
 import Button from 'primevue/button';
 import Card from 'primevue/card';
@@ -82,6 +85,7 @@ app.use(PrimeVue, {
 app.component('DataTable', DataTable)
 app.component('Chart', Chart)
 app.component('Column', Column)
+app.component('Divider', Divider)
 app.component('Paginator', Paginator)
 app.component('InputText', InputText)
 app.component('InputGroup', InputGroup)
