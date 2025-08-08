@@ -9,6 +9,7 @@ export class AttendanceFormatter {
         wfh: 'WFH'
     };
 
+
     private static readonly classMap: Record<AttendanceKey, string> = {
         present: 'text-green-500',
         late: 'text-yellow-400',
@@ -25,3 +26,9 @@ export class AttendanceFormatter {
         return this.classMap[key] || '';
     }
 }
+
+
+
+
+
+

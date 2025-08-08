@@ -2,16 +2,13 @@
     <div>
         <div class="container-fluid py-4">
             <div class="row">
-                <div class="col-8">
+                <div class="col-12">
                     <div class="card">
                         <div class="card-body">
-
+                            <attendancy-summary class="mb-5"></attendancy-summary>
                             <data-table></data-table>
                         </div>
                     </div>
-                </div>
-                <div class="col-4">
-                    <attendancy-summary class="mb-5"></attendancy-summary>
                 </div>
             </div>
         </div>

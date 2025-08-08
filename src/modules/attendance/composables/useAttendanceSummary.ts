@@ -1,6 +1,8 @@
 import { useAttendanceStore } from '@module/attendance/stores/attendance';
 
+import { PercentageFormatter } from "@/lib/PercentageFormatter";
 import { AttendanceFormatter, type AttendanceKey } from "@module/attendance/services/attendanceService";
+import { ShiftFormatter } from "@module/shift/services/shiftService";
 import { storeToRefs } from "pinia";
 import { computed } from "vue";
 
@@ -14,7 +16,8 @@ export function useAttendanceSummary() {
 
     const store = useAttendanceStore()
 
-    const { summary: data } = storeToRefs(store)
+    const { summary: data, checkInAverage, checkInPercentage, shiftStatistics } = storeToRefs(store)
+
 
 
     const chartData = computed(() => {
@@ -47,6 +50,19 @@ export function useAttendanceSummary() {
     const getAttendanceClass = (key: string) => {
         return `${AttendanceFormatter.getClass(key as AttendanceKey)}`;
     };
+
+    const formatShiftStatisticsKey = (key: string) => {
+        return ShiftFormatter.getDisplayText(key);
+    };
+    const formatShiftStatisticsClass = (key: number) => {
+        return {
+            'class': `${PercentageFormatter.getColor(key)}`,
+            'format': `${PercentageFormatter.getFormat(key)}`,
+            'label': `${PercentageFormatter.getLabel(key)}`
+        };
+    };
+
+
     const chartDataStacked = computed(() => {
         const documentStyle = getComputedStyle(document.body);
         return {
@@ -123,7 +139,13 @@ export function useAttendanceSummary() {
         chartDataStacked,
         chartOptionsStacked,
         totalValue,
+        checkInAverage,
+        checkInPercentage,
+        shiftStatistics,
         formatAttendanceKey,
-        getAttendanceClass
+        getAttendanceClass,
+        formatShiftStatisticsKey,
+        formatShiftStatisticsClass
+
     }
 }

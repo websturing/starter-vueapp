@@ -1,12 +1,15 @@
 import api from '@/lib/api'
 import { handleApiError } from '@/types/errorTypes'
-import { type AttendanceItem, type AttendanceSummary, AttendanceResponseSchema } from '@module/attendance/schemas/attendanceSchema'
+import { type AttendanceRecord, type AttendanceSummary, type ShiftStatistics, AttendanceReportSchema } from '@module/attendance/schemas/attendanceSchema'
 import { defineStore } from 'pinia'
 
 export const useAttendanceStore = defineStore('attendance', {
     state: () => ({
-        data: [] as AttendanceItem[],
+        data: [] as AttendanceRecord[],
         summary: {} as AttendanceSummary,
+        checkInAverage: '',
+        checkInPercentage: {},
+        shiftStatistics: {} as Record<string, ShiftStatistics>,
         loading: false,
         error: null as string | null,
     }),
@@ -18,12 +21,15 @@ export const useAttendanceStore = defineStore('attendance', {
             try {
                 const res = await api.get('/api/attendance/today')
 
-                const result = AttendanceResponseSchema.safeParse(res.data.data)
+                const result = AttendanceReportSchema.safeParse(res.data.data)
                 if (!result.success) {
                     throw new Error('❌ Invalid Attendance Today data from API')
                 }
-                this.data = result.data.items
+                this.data = result.data.records
                 this.summary = result.data.summary
+                this.checkInAverage = result.data.checkInAverage
+                this.checkInPercentage = result.data.checkInAnalytics
+                this.shiftStatistics = result.data.shiftStatistics
                 this.error = null
             } catch (error) {
                 this.data = []
