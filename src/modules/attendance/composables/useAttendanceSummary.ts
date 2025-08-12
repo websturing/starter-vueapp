@@ -16,7 +16,7 @@ export function useAttendanceSummary() {
 
     const store = useAttendanceStore()
 
-    const { summary: data, checkInAverage, checkInPercentage, shiftStatistics } = storeToRefs(store)
+    const { summary: data, checkInAverage, checkInPercentage, shiftStatistics, loading, titleData } = storeToRefs(store)
 
 
 
@@ -135,6 +135,8 @@ export function useAttendanceSummary() {
     });
 
     return {
+        titleData,
+        loading,
         data,
         chartDataStacked,
         chartOptionsStacked,

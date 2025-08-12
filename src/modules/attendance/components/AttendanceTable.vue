@@ -30,6 +30,7 @@ const {
 const columns = [
     { field: 'no', header: 'No' },
     { field: 'user', header: 'Employee Name' },
+    { field: 'date', header: 'Date' },
     { field: 'checkIn', header: 'Check In' },
     { field: 'checkOut', header: 'Check Out' },
     { field: 'status', header: 'status' },

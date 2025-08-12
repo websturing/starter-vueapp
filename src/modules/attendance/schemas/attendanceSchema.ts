@@ -17,9 +17,7 @@ const AttendanceRecordSchema = z.object({
     checkIn: z.string(),
     checkOut: z.string(),
     workingHours: z.string(),
-    status: z.enum(['present', 'late', 'absent', 'on_leave', 'wfh']),
     user: z.string(),
-    logs: z.array(AttendanceLogSchema),
     logCount: z.number(),
 });
 
@@ -55,6 +53,7 @@ export const AttendanceReportSchema = z.object({
 });
 
 export const AttendanceRecordListSchema = z.array(AttendanceRecordSchema);
+export const AttendanceShiftStatisticsSchema = z.record(ShiftStatisticsSchema);
 
 // Type exports
 export type AttendanceReport = z.infer<typeof AttendanceReportSchema>;

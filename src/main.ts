@@ -17,6 +17,7 @@ import Divider from 'primevue/divider';
 import BlockUI from 'primevue/blockui';
 import Button from 'primevue/button';
 import Card from 'primevue/card';
+import Carousel from 'primevue/carousel';
 import Chart from 'primevue/chart';
 import Checkbox from 'primevue/checkbox';
 import CheckboxGroup from 'primevue/checkboxgroup';
@@ -82,6 +83,7 @@ app.use(PrimeVue, {
         }
     }
 });
+app.component('Carousel', Carousel)
 app.component('DataTable', DataTable)
 app.component('Chart', Chart)
 app.component('Column', Column)

@@ -12,6 +12,11 @@ export const useAttendanceStore = defineStore('attendance', {
         shiftStatistics: {} as Record<string, ShiftStatistics>,
         loading: false,
         error: null as string | null,
+        titleData: "Today" as string,
+        dateRange: {
+            start: null as string | null,
+            end: null as string | null
+        }
     }),
 
     actions: {
@@ -20,6 +25,31 @@ export const useAttendanceStore = defineStore('attendance', {
             this.error = null
             try {
                 const res = await api.get('/api/attendance/today')
+
+                const result = AttendanceReportSchema.safeParse(res.data.data)
+                if (!result.success) {
+                    throw new Error('❌ Invalid Attendance Today data from API')
+                }
+                this.data = result.data.records
+                this.summary = result.data.summary
+                this.checkInAverage = result.data.checkInAverage
+                this.checkInPercentage = result.data.checkInAnalytics
+                this.shiftStatistics = result.data.shiftStatistics
+                this.error = null
+            } catch (error) {
+                this.data = []
+                this.error = handleApiError(error)
+                throw error
+            } finally {
+                this.loading = false
+            }
+        },
+
+        async fetchAttendanceDateRange(startDate: string, endDate: string) {
+            this.loading = true
+            this.error = null
+            try {
+                const res = await api.get('/api/attendance/range-date?start_date=' + startDate + '&end_date=' + endDate)
 
                 const result = AttendanceReportSchema.safeParse(res.data.data)
                 if (!result.success) {
@@ -71,5 +101,9 @@ export const useAttendanceStore = defineStore('attendance', {
                 this.loading = false
             }
         },
+
+        setTitleData(title: string) {
+            this.titleData = title
+        }
     },
 })
